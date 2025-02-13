@@ -7,6 +7,7 @@ class MovableObject extends DrawableObject {
     coins = 0;
     bottles = 0;
     lastHit = 0;
+    lastBounce = 0;
     offset = {
         top: 0,
         left: 0,
@@ -19,20 +20,34 @@ class MovableObject extends DrawableObject {
             if (this.isAboveGround() || this.speedY > 0) {
                 this.y -= this.speedY;
                 this.speedY -= this.acceleration;
+            } else {
+                this.speedY = 0; // Verhindert, dass `speedY` weiter negativ wird
+                this.y = 150; // Standardwert für den Boden -> Setze Y zurück!
             }
-        }, 1000 / 60)
-    }
+        }, 1000 / 60);
+    }    
 
     isAboveGround() {
-        return this.y < 150;
+        if (this instanceof ThrowableObject) { // Throwable Objects should always fall
+            return true;
+        } else {
+            return this.y < 150;
+        }
     }
 
     isColliding(mo) {
+        let currentTime = new Date().getTime();
+        if (currentTime - this.lastBounce < 100) {
+            return false; // Keine Kollision für 100ms nach einem Bounce
+        }
+    
         return this.x + this.width - this.offset.right > mo.x + mo.offset.left &&
-            this.y + this.height - this.offset.bottom > mo.y + mo.offset.top &&
-            this.x + this.offset.left < mo.x + mo.width - mo.offset.right &&
-            this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom;
+               this.y + this.height - this.offset.bottom > mo.y + mo.offset.top &&
+               this.x + this.offset.left < mo.x + mo.width - mo.offset.right &&
+               this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom;
     }
+    
+    
 
     hit() {
         const currentTime = new Date().getTime();
@@ -92,7 +107,7 @@ class MovableObject extends DrawableObject {
     }
 
     bounce() {
-        this.speedY = 20; // Stärkerer Sprung nach oben
-    }
-    
+        this.speedY = 20;
+        this.lastBounce = new Date().getTime();  // Merkt sich die Zeit des letzten Sprungs
+    }    
 }

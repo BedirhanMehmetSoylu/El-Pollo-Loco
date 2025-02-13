@@ -94,9 +94,12 @@ class Character extends MovableObject {
     }
 
     isJumpingOn(enemy) {
-        return this.y + this.height - this.offset.bottom < enemy.y + enemy.offset.top + 10 &&
-               this.speedY < 0; // Nur wenn der Charakter nach unten fällt       
+        return (
+            this.y + this.height - this.offset.bottom < enemy.y + enemy.height / 2 &&
+            this.speedY < 0
+        );
     }
+    
 
     animate() {
         setInterval(() => {

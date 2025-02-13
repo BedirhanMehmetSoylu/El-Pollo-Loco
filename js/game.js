@@ -9,7 +9,7 @@ function init(){
     console.log('My Character is', world.character);
 }
 
-document.addEventListener('keydown', (event) => {
+document.addEventListener('keydown', (event) => {    
     if (event.keyCode == 40) {
         keyboard.DOWN = true;
     }
@@ -28,6 +28,10 @@ document.addEventListener('keydown', (event) => {
 
     if (event.keyCode == 32) {
         keyboard.SPACE = true;
+    }
+
+    if (event.keyCode == 69) {
+        keyboard.E = true;
     }
 });
 
@@ -50,5 +54,9 @@ document.addEventListener('keyup', (event) => {
 
     if (event.keyCode == 32) {
         keyboard.SPACE = false;
+    }
+
+    if (event.keyCode == 69) {
+        keyboard.E = false;
     }
 });
