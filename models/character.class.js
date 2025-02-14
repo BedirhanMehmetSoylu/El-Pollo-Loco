@@ -1,5 +1,4 @@
 class Character extends MovableObject {
-
     height = 280;
     width = 140;
     y = 150;
@@ -100,7 +99,6 @@ class Character extends MovableObject {
         );
     }
     
-
     animate() {
         setInterval(() => {
             if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {

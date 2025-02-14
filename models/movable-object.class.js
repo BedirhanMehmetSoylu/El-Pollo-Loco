@@ -46,8 +46,6 @@ class MovableObject extends DrawableObject {
                this.x + this.offset.left < mo.x + mo.width - mo.offset.right &&
                this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom;
     }
-    
-    
 
     hit() {
         const currentTime = new Date().getTime();

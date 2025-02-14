@@ -33,12 +33,14 @@ class World {
     }
 
     checkThrowObjects() {
-        if (this.keyboard.E) {
+        if (this.keyboard.E && this.character.bottles > 0) { // Nur werfen, wenn Flaschen vorhanden sind
             let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
             this.throwableObjects.push(bottle);
+            this.character.bottles -= 1; // Eine Flasche abziehen  
+            this.statusBarBottle.setPercentageBottle(this.character.bottles); // StatusBar aktualisieren
         }
     }
-
+    
     checkCollisions() {
         this.level.enemies.forEach((enemy, index) => {
             if (this.character.isColliding(enemy)) {
@@ -73,6 +75,7 @@ class World {
                      this.character.collectBottle();
                      this.level.bottles.splice(this.level.bottles.indexOf(bottle), 1);
                      this.statusBarBottle.setPercentageBottle(this.character.bottles);
+                     this.bottlesCount += 1;
                  }
             }) 
          }, 200);
