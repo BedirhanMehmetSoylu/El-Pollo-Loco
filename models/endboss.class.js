@@ -52,13 +52,25 @@ class Endboss extends MovableObject {
     height = 400;
     width = 250;
     y = 55;
-    speed = 2;
+    speed = 3.5;
 
     IMAGES_WALKING = [
         './img/4_enemie_boss_chicken/1_walk/G1.png',
+        './img/4_enemie_boss_chicken/1_walk/G1.png',
+        './img/4_enemie_boss_chicken/1_walk/G1.png',
+        './img/4_enemie_boss_chicken/1_walk/G1.png',
+        './img/4_enemie_boss_chicken/1_walk/G2.png',
+        './img/4_enemie_boss_chicken/1_walk/G2.png',
+        './img/4_enemie_boss_chicken/1_walk/G2.png',
         './img/4_enemie_boss_chicken/1_walk/G2.png',
         './img/4_enemie_boss_chicken/1_walk/G3.png',
+        './img/4_enemie_boss_chicken/1_walk/G3.png',
+        './img/4_enemie_boss_chicken/1_walk/G3.png',
+        './img/4_enemie_boss_chicken/1_walk/G3.png',
         './img/4_enemie_boss_chicken/1_walk/G4.png',
+        './img/4_enemie_boss_chicken/1_walk/G4.png',
+        './img/4_enemie_boss_chicken/1_walk/G4.png',
+        './img/4_enemie_boss_chicken/1_walk/G4.png'
     ];
 
     IMAGES_ALERT = [
@@ -72,11 +84,12 @@ class Endboss extends MovableObject {
         './img/4_enemie_boss_chicken/2_alert/G12.png'
     ];
 
-    constructor() {
+    constructor(character) {
         super().loadImage(this.IMAGES_WALKING[0]);
         this.loadImages(this.IMAGES_WALKING);
         this.loadImages(this.IMAGES_ALERT);
         this.x = 600; // Startposition
+        this.character = character;
         this.isWalking = true;  // Neue Variable, um zu steuern, ob der Boss läuft oder im Alarmzustand ist
         this.alertMode = false; // Flag, um den Alarmzustand zu verfolgen
         this.alertAnimationPlayed = false; // Sicherstellen, dass der Alarm nur einmal abgespielt wird
@@ -86,11 +99,17 @@ class Endboss extends MovableObject {
     animate() {
         // Animation für das Gehen (läuft kontinuierlich)
         setInterval(() => {
-            if (this.isWalking && !this.alertMode) {
+            if (!this.alertMode) {  // Endboss läuft nur, wenn er nicht im Alarmzustand ist
+                if (this.x < this.character.x) {
+                    this.moveRight();
+                    this.otherDirection = true;
+                } else {
+                    this.moveLeft();
+                    this.otherDirection = false;
+                }
                 this.playAnimation(this.IMAGES_WALKING);
-                this.moveLeft(); // Der Boss läuft nach links
             }
-        }, 50);
+        }, 1000 / 60);
 
         // Wenn der Boss im Alarmzustand ist, wird die Alarm-Animation gespielt
         setInterval(() => {

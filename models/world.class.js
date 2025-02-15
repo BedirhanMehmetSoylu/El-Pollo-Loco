@@ -1,5 +1,6 @@
 class World {
     character = new Character();
+    endboss = new Endboss(this.character);
     level = level1;
     canvas;
     ctx;
@@ -39,7 +40,7 @@ class World {
     
         if (this.keyboard.E && this.character.bottles > 0 && currentTime - this.lastThrowTime >= throwDelay) {
     
-            let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
+            let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100, this.character.otherDirection);
             this.throwableObjects.push(bottle);
             this.character.bottles -= 1;
             this.statusBarBottle.setPercentageBottle(this.character.bottles);
@@ -105,6 +106,7 @@ class World {
         this.addObjectsToMap(this.level.coins);
         this.addObjectsToMap(this.level.bottles);
         this.addToMap(this.character);
+        this.addToMap(this.endboss);
         this.ctx.translate(-this.camera_x, 0);
 
         // draw() wird immer wieder aufgerufen

@@ -2,7 +2,7 @@ class Character extends MovableObject {
     height = 280;
     width = 140;
     y = 150;
-    speed = 10;
+    speed = 8;
     idleTime = 0; // Zeit, die der Charakter im Idle-Status verbringt
     isLongIdle = false; // Ob die Idle Long Animation aktiv ist
     IMAGES_IDLE = [
