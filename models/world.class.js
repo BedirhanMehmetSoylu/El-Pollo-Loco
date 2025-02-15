@@ -14,6 +14,7 @@ class World {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
         this.keyboard = keyboard;
+        this.lastThrowTime = new Date().getTime();
         this.draw();
         this.setWorld();
         this.run();
@@ -33,11 +34,17 @@ class World {
     }
 
     checkThrowObjects() {
-        if (this.keyboard.E && this.character.bottles > 0) { // Nur werfen, wenn Flaschen vorhanden sind
+        const currentTime = new Date().getTime();
+        const throwDelay = 500; // Delay in Millisekunden (500ms)
+    
+        if (this.keyboard.E && this.character.bottles > 0 && currentTime - this.lastThrowTime >= throwDelay) {
+    
             let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
             this.throwableObjects.push(bottle);
-            this.character.bottles -= 1; // Eine Flasche abziehen  
-            this.statusBarBottle.setPercentageBottle(this.character.bottles); // StatusBar aktualisieren
+            this.character.bottles -= 1;
+            this.statusBarBottle.setPercentageBottle(this.character.bottles);
+            
+            this.lastThrowTime = currentTime;
         }
     }
     

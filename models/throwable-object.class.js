@@ -8,13 +8,6 @@ class ThrowableObject extends MovableObject {
         this.throw();
     }
 
-    checkThrowObjects() {
-        if (this.keyboard.E && this.world.bottles > 0) {
-            let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
-            this.throwableObjects.push(bottle);
-        }
-    }
-
     throw() {
         this.speedY = 30;
         this.applyGravity();
