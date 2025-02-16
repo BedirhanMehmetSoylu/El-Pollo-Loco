@@ -31,7 +31,14 @@ class World {
         setInterval(() => {
             this.checkCollisions();
             this.checkThrowObjects();
+            this.checkForEndbossActivation(); // NEU: Aktiviert den Endboss
         }, 1000 / 60);
+    }
+
+    checkForEndbossActivation() {
+        if (!this.endboss.activated && this.character.x >= 2190) { 
+            this.endboss.activate(this.character); // Endboss startet seine Animation
+        }
     }
 
     checkThrowObjects() {
@@ -54,7 +61,13 @@ class World {
             if (this.character.isColliding(enemy)) {
                 if (this.character.isJumpingOn(enemy)) {
                     this.character.bounce();
-                    this.level.enemies.splice(index, 1);
+                    enemy.energy = 0;
+                    if (enemy.energy <= 0) {
+                        enemy.die(); // Gegner stirbt mit Animation
+                        setTimeout(() => {
+                            this.level.enemies.splice(index, 1);  
+                        }, 250)
+                    }
                 } 
                 else if (!this.character.isHurt()) { 
                     this.character.hit();

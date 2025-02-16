@@ -98,7 +98,7 @@ class Character extends MovableObject {
             this.speedY < 0
         );
     }
-    
+
     animate() {
         setInterval(() => {
             if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
@@ -112,7 +112,7 @@ class Character extends MovableObject {
                 this.otherDirection = true;
                 this.resetIdleTimer();
             }
-            
+
             if (this.world.keyboard.SPACE && !this.isAboveGround()) {
                 this.jump();
                 this.resetIdleTimer();

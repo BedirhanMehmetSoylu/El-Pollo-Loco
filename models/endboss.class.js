@@ -1,54 +1,6 @@
-// class Endboss extends MovableObject {
-
-//     height = 400;
-//     width = 250;
-//     y = 55;
-//     speed = 2;
-
-//     IMAGES_WALKING = [
-//         './img/4_enemie_boss_chicken/1_walk/G1.png',
-//         './img/4_enemie_boss_chicken/1_walk/G2.png',
-//         './img/4_enemie_boss_chicken/1_walk/G3.png',
-//         './img/4_enemie_boss_chicken/1_walk/G4.png',
-//     ];
-
-//     IMAGES_ALERT = [
-//         './img/4_enemie_boss_chicken/2_alert/G5.png',
-//         './img/4_enemie_boss_chicken/2_alert/G6.png',
-//         './img/4_enemie_boss_chicken/2_alert/G7.png',
-//         './img/4_enemie_boss_chicken/2_alert/G8.png',
-//         './img/4_enemie_boss_chicken/2_alert/G9.png',
-//         './img/4_enemie_boss_chicken/2_alert/G10.png',
-//         './img/4_enemie_boss_chicken/2_alert/G11.png',
-//         './img/4_enemie_boss_chicken/2_alert/G12.png'
-//     ];
-
-//     constructor() {
-//         super().loadImage(this.IMAGES_WALKING[0]);
-//         this.loadImages(this.IMAGES_WALKING);
-//         this.loadImages(this.IMAGES_ALERT);
-//         this.x = 600;
-//         this.animate();
-//     }
-
-//     animate() {
-//         setInterval(() => {
-//             this.playAnimation(this.IMAGES_WALKING);
-//             this.moveLeft();
-//         }, 1000 / 60);
-    
-//         setTimeout(() => {
-//             this.moveLeft();
-//         }, 1000);
-
-//         setInterval(() => {
-//             this.playAnimation(this.IMAGES_ALERT);
-//         }, 150);
-//     }
-// }
-
 class Endboss extends MovableObject {
-
+    activated = false; // NEU: Startet deaktiviert
+    character = null;
     height = 400;
     width = 250;
     y = 55;
@@ -88,15 +40,22 @@ class Endboss extends MovableObject {
         super().loadImage(this.IMAGES_WALKING[0]);
         this.loadImages(this.IMAGES_WALKING);
         this.loadImages(this.IMAGES_ALERT);
-        this.x = 600; // Startposition
+        this.x = 2800; // Startposition
         this.character = character;
         this.isWalking = true;  // Neue Variable, um zu steuern, ob der Boss läuft oder im Alarmzustand ist
         this.alertMode = false; // Flag, um den Alarmzustand zu verfolgen
         this.alertAnimationPlayed = false; // Sicherstellen, dass der Alarm nur einmal abgespielt wird
+    }
+
+    activate(character) {
+        this.activated = true;
+        this.character = character;
         this.animate();
     }
 
     animate() {
+        if (!this.activated) return; // Falls noch nicht aktiviert, abbrechen
+
         // Animation für das Gehen (läuft kontinuierlich)
         setInterval(() => {
             if (!this.alertMode) {  // Endboss läuft nur, wenn er nicht im Alarmzustand ist
@@ -120,7 +79,7 @@ class Endboss extends MovableObject {
 
         // Überprüfen, ob der Boss in den Alarmzustand wechselt (z.B. wenn er eine bestimmte Position erreicht)
         setInterval(() => {
-            if (this.x <= 400 && !this.alertAnimationPlayed) {
+            if (this.x <= 2600 && !this.alertAnimationPlayed) {
                 this.enterAlertMode(); // Wechsel in den Alarmzustand
             }
         }, 1000 / 60);
