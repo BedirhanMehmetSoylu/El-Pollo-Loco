@@ -131,3 +131,48 @@ class StatusBarCoin extends DrawableObject {
         }
     }
 }
+
+class StatusBarEndboss extends DrawableObject {
+    IMAGES = [
+        './img/7_statusbars/2_statusbar_endboss/green/0.png',
+        './img/7_statusbars/2_statusbar_endboss/green/20.png',
+        './img/7_statusbars/2_statusbar_endboss/green/40.png',
+        './img/7_statusbars/2_statusbar_endboss/green/60.png',
+        './img/7_statusbars/2_statusbar_endboss/green/80.png',
+        './img/7_statusbars/2_statusbar_endboss/green/100.png'
+    ];
+
+    percentageEndboss = 100;
+
+    constructor() {
+        super();
+        this.loadImages(this.IMAGES);
+        this.x = 460;
+        this.y = 8;
+        this.width = 240;
+        this.height = 64;
+        this.setPercentage(100);
+    }
+
+    setPercentage(percentageEndboss) {
+        this.percentageEndboss = percentageEndboss;
+        let path = this.IMAGES[this.resolveImageIndexHealth()];
+        this.img = this.imageCache[path];
+    }
+
+    resolveImageIndexHealth() {
+        if (this.percentageEndboss == 100) {
+            return 5;
+        } else if (this.percentageEndboss > 80) {
+            return 4;
+        } else if (this.percentageEndboss > 60) {
+            return 3;
+        } else if (this.percentageEndboss > 40) {
+            return 2;
+        } else if (this.percentageEndboss > 20) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+}
