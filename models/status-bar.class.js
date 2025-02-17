@@ -72,9 +72,9 @@ class StatusBarBottle extends DrawableObject {
     }
 
     resolveImageIndexBottle() {
-        if (this.percentageBottle <= 1) {
+        if (this.percentageBottle <= 0) {
             return 0;
-        } else if (this.percentageBottle <= 2) {
+        } else if (this.percentageBottle <= 1) {
             return 1;
         } else if (this.percentageBottle <= 4) {
             return 2;
@@ -116,9 +116,9 @@ class StatusBarCoin extends DrawableObject {
     }
 
     resolveImageIndexCoins() {
-        if (this.percentageCoin <= 1) {
+        if (this.percentageCoin <= 0) {
             return 0;
-        } else if (this.percentageCoin <= 2) {
+        } else if (this.percentageCoin <= 1) {
             return 1;
         } else if (this.percentageCoin <= 4) {
             return 2;
