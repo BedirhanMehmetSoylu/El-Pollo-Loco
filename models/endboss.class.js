@@ -1,5 +1,5 @@
 class Endboss extends MovableObject {
-    activated = false; // NEU: Startet deaktiviert
+    activated = false;
     character = null;
     height = 400;
     width = 250;
@@ -36,15 +36,42 @@ class Endboss extends MovableObject {
         './img/4_enemie_boss_chicken/2_alert/G12.png'
     ];
 
+    IMAGES_ATTACK = [
+        './img/4_enemie_boss_chicken/3_attack/G13.png',
+        './img/4_enemie_boss_chicken/3_attack/G13.png',
+        './img/4_enemie_boss_chicken/3_attack/G14.png',
+        './img/4_enemie_boss_chicken/3_attack/G14.png',
+        './img/4_enemie_boss_chicken/3_attack/G15.png',
+        './img/4_enemie_boss_chicken/3_attack/G15.png',
+        './img/4_enemie_boss_chicken/3_attack/G16.png',
+        './img/4_enemie_boss_chicken/3_attack/G16.png',
+        './img/4_enemie_boss_chicken/3_attack/G17.png',
+        './img/4_enemie_boss_chicken/3_attack/G17.png',
+        './img/4_enemie_boss_chicken/3_attack/G18.png',
+        './img/4_enemie_boss_chicken/3_attack/G18.png',
+        './img/4_enemie_boss_chicken/3_attack/G19.png',
+        './img/4_enemie_boss_chicken/3_attack/G19.png',
+        './img/4_enemie_boss_chicken/3_attack/G20.png',
+        './img/4_enemie_boss_chicken/3_attack/G20.png'
+    ];
+
+    offset = {
+        top: 60,
+        bottom: 0,
+        left: 15,
+        right: 5
+    }
+
     constructor(character) {
         super().loadImage(this.IMAGES_WALKING[0]);
         this.loadImages(this.IMAGES_WALKING);
         this.loadImages(this.IMAGES_ALERT);
-        this.x = 2800; // Startposition
+        this.loadImages(this.IMAGES_ATTACK);
+        this.x = 2800;
         this.character = character;
-        this.isWalking = true;  // Neue Variable, um zu steuern, ob der Boss läuft oder im Alarmzustand ist
-        this.alertMode = false; // Flag, um den Alarmzustand zu verfolgen
-        this.alertAnimationPlayed = false; // Sicherstellen, dass der Alarm nur einmal abgespielt wird
+        this.isWalking = true;
+        this.alertMode = false;
+        this.alertAnimationPlayed = false;
     }
 
     activate(character) {
@@ -54,11 +81,10 @@ class Endboss extends MovableObject {
     }
 
     animate() {
-        if (!this.activated) return; // Falls noch nicht aktiviert, abbrechen
+        if (!this.activated) return;
 
-        // Animation für das Gehen (läuft kontinuierlich)
         setInterval(() => {
-            if (!this.alertMode) {  // Endboss läuft nur, wenn er nicht im Alarmzustand ist
+            if (!this.alertMode && !this.attacking) {
                 if (this.x < this.character.x) {
                     this.moveRight();
                     this.otherDirection = true;
@@ -70,33 +96,43 @@ class Endboss extends MovableObject {
             }
         }, 1000 / 60);
 
-        // Wenn der Boss im Alarmzustand ist, wird die Alarm-Animation gespielt
         setInterval(() => {
             if (this.alertMode && !this.alertAnimationPlayed) {
                 this.playAnimation(this.IMAGES_ALERT);
             }
         }, 150);
 
-        // Überprüfen, ob der Boss in den Alarmzustand wechselt (z.B. wenn er eine bestimmte Position erreicht)
         setInterval(() => {
             if (this.x <= 2600 && !this.alertAnimationPlayed) {
-                this.enterAlertMode(); // Wechsel in den Alarmzustand
+                this.enterAlertMode();
             }
         }, 1000 / 60);
     }
 
-    // Funktion, die den Boss in den Alarmzustand versetzt
     enterAlertMode() {
-        this.isWalking = false; // Der Boss stoppt vorerst
-        this.alertMode = true; // Alarm-Flag aktivieren
-        this.alertAnimationPlayed = false; // Sicherstellen, dass die Animation nur einmal gespielt wird
+        this.isWalking = false;
+        this.alertMode = true;
+        this.alertAnimationPlayed = false;
 
-        // Alarm-Phase für 2 Sekunden abspielen und dann wieder laufen
         setTimeout(() => {
-            this.alertMode = false; // Alarm-Flag deaktivieren
-            this.alertAnimationPlayed = true; // Alarm-Animation abgeschlossen
-            this.isWalking = true; // Der Boss beginnt wieder zu laufen
-        }, 1000); // Alarm-Phase dauert 2 Sekunden
+            this.alertMode = false;
+            this.alertAnimationPlayed = true;
+            this.isWalking = true;
+        }, 1000);
+    }
+
+    attack() {
+        if (this.attacking) return;
+    
+        this.attacking = true;
+        this.isWalking = false;
+        this.alertMode = false;  
+        this.playAnimation(this.IMAGES_ATTACK);
+    
+        setTimeout(() => {
+            this.attacking = false;
+            this.isWalking = true;
+        }, 1000 / 30);
     }
 }
 

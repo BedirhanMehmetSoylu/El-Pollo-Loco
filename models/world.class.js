@@ -31,6 +31,7 @@ class World {
     run() {
         setInterval(() => {
             this.checkCollisions();
+            this.checkCollisionsEndboss();
             this.checkThrowObjects();
             this.checkForEndbossActivation(); // NEU: Aktiviert den Endboss
         }, 1000 / 60);
@@ -76,6 +77,14 @@ class World {
                 }
             }
         });
+    }
+
+    checkCollisionsEndboss() {
+        if (this.endboss.isColliding(this.character)) {
+            this.character.hit();
+            this.statusBarHealth.setPercentage(this.character.energy);
+            this.endboss.attack();
+        }
     }
     
     checkCollisionCoins() {
