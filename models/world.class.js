@@ -34,6 +34,7 @@ class World {
             this.checkCollisionsEndboss();
             this.checkThrowObjects();
             this.checkForEndbossActivation(); // NEU: Aktiviert den Endboss
+            this.checkCollisionsThrowableObject();
         }, 1000 / 60);
     }
 
@@ -75,6 +76,33 @@ class World {
                     this.character.hit();
                     this.statusBarHealth.setPercentage(this.character.energy);
                 }
+            }
+        });
+    }
+
+    checkCollisionsThrowableObject() {
+    this.throwableObjects.forEach((bottle, bottleIndex) => {
+        this.level.enemies.forEach((enemy, enemyIndex) => {
+            if (bottle.isColliding(enemy)) {
+                enemy.energy = 0;
+                if (enemy.energy <= 0) {
+                    enemy.die();
+                    setTimeout(() => {
+                        this.level.enemies.splice(enemyIndex, 1);
+                    }, 250);
+                }
+                this.throwableObjects.splice(bottleIndex, 1); // Entfernt die Flasche nach dem Treffer
+            }
+        });
+
+        if (bottle.isColliding(this.endboss)) {
+            this.endboss.energy -= 20; // Endboss nimmt Schaden
+            this.statusBarEndboss.setPercentage(this.endboss.energy);
+            this.endboss.takeDamage();
+            if (this.endboss.energy <= 0) {
+                this.endboss.die(); // Endboss stirbt mit Animation
+            }
+            this.throwableObjects.splice(bottleIndex, 1); // Entfernt die Flasche nach dem Treffer
             }
         });
     }
