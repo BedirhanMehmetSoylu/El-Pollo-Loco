@@ -33,20 +33,20 @@ class World {
             this.checkCollisions();
             this.checkCollisionsEndboss();
             this.checkThrowObjects();
-            this.checkForEndbossActivation(); // NEU: Aktiviert den Endboss
+            this.checkForEndbossActivation();
             this.checkCollisionsThrowableObject();
         }, 1000 / 60);
     }
 
     checkForEndbossActivation() {
         if (!this.endboss.activated && this.character.x >= 2190) { 
-            this.endboss.activate(this.character); // Endboss startet seine Animation
+            this.endboss.activate(this.character);
         }
     }
 
     checkThrowObjects() {
         const currentTime = new Date().getTime();
-        const throwDelay = 500; // Delay in Millisekunden (500ms)
+        const throwDelay = 500;
     
         if (this.keyboard.E && this.character.bottles > 0 && currentTime - this.lastThrowTime >= throwDelay) {
     
@@ -66,7 +66,7 @@ class World {
                     this.character.bounce();
                     enemy.energy = 0;
                     if (enemy.energy <= 0) {
-                        enemy.die(); // Gegner stirbt mit Animation
+                        enemy.die();
                         setTimeout(() => {
                             this.level.enemies.splice(index, 1);  
                         }, 250)
@@ -91,18 +91,18 @@ class World {
                         this.level.enemies.splice(enemyIndex, 1);
                     }, 250);
                 }
-                this.throwableObjects.splice(bottleIndex, 1); // Entfernt die Flasche nach dem Treffer
+                this.throwableObjects.splice(bottleIndex, 1);
             }
         });
 
         if (bottle.isColliding(this.endboss)) {
-            this.endboss.energy -= 20; // Endboss nimmt Schaden
+            this.endboss.energy -= 20;
             this.statusBarEndboss.setPercentage(this.endboss.energy);
             this.endboss.takeDamage();
             if (this.endboss.energy <= 0) {
-                this.endboss.die(); // Endboss stirbt mit Animation
+                this.endboss.die();
             }
-            this.throwableObjects.splice(bottleIndex, 1); // Entfernt die Flasche nach dem Treffer
+            this.throwableObjects.splice(bottleIndex, 1);
             }
         });
     }
@@ -163,7 +163,6 @@ class World {
         this.addToMap(this.endboss);
         this.ctx.translate(-this.camera_x, 0);
 
-        // draw() wird immer wieder aufgerufen
         let self = this;
         requestAnimationFrame(function () {
             self.draw();

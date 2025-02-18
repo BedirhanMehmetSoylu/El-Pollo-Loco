@@ -21,14 +21,14 @@ class MovableObject extends DrawableObject {
                 this.y -= this.speedY;
                 this.speedY -= this.acceleration;
             } else {
-                this.speedY = 0; // Verhindert, dass `speedY` weiter negativ wird
-                this.y = 150; // Standardwert für den Boden -> Setze Y zurück!
+                this.speedY = 0;
+                this.y = 150;
             }
         }, 1000 / 60);
     }    
 
     isAboveGround() {
-        if (this instanceof ThrowableObject) { // Throwable Objects should always fall
+        if (this instanceof ThrowableObject) {
             return true;
         } else {
             return this.y < 150;
@@ -38,7 +38,7 @@ class MovableObject extends DrawableObject {
     isColliding(mo) {
         let currentTime = new Date().getTime();
         if (currentTime - this.lastBounce < 100) {
-            return false; // Keine Kollision für 100ms nach einem Bounce
+            return false;
         }
     
         return this.x + this.width - this.offset.right > mo.x + mo.offset.left &&
@@ -76,8 +76,8 @@ class MovableObject extends DrawableObject {
     }
 
     isHurt() {
-        let timepassed = new Date().getTime() - this.lastHit; // Diffrence in ms
-        timepassed = timepassed / 1000; // Difference ins s
+        let timepassed = new Date().getTime() - this.lastHit;
+        timepassed = timepassed / 1000;
         return timepassed < 1;
     }
 
@@ -86,7 +86,7 @@ class MovableObject extends DrawableObject {
     }
 
     playAnimation(images) {
-        let i = this.currentImage % images.length; // i = 0, 1, 2, 3, 4, 5, 0, 1, 2, 3, 4, 5, 0
+        let i = this.currentImage % images.length;
         let path = images[i];
         this.img = this.imageCache[path];
         this.currentImage++;
@@ -106,6 +106,6 @@ class MovableObject extends DrawableObject {
 
     bounce() {
         this.speedY = 20;
-        this.lastBounce = new Date().getTime();  // Merkt sich die Zeit des letzten Sprungs
+        this.lastBounce = new Date().getTime();
     }    
 }

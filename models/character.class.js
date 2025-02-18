@@ -3,8 +3,8 @@ class Character extends MovableObject {
     width = 140;
     y = 150;
     speed = 8;
-    idleTime = 0; // Zeit, die der Charakter im Idle-Status verbringt
-    isLongIdle = false; // Ob die Idle Long Animation aktiv ist
+    idleTime = 0;
+    isLongIdle = false;
     IMAGES_IDLE = [
         './img/2_character_pepe/1_idle/idle/I-1.png',
         './img/2_character_pepe/1_idle/idle/I-1.png',
@@ -131,14 +131,14 @@ class Character extends MovableObject {
             } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
                 this.playAnimation(this.IMAGES_WALKING);
             } else {
-                this.handleIdleAnimation(); // Idle-Animation, wenn keine Taste gedrückt wird
+                this.handleIdleAnimation();
             }
         }, 100);
     }
 
     handleIdleAnimation() {
-        this.idleTime += 100; // 100ms pro Loop
-        if (this.idleTime >= 5000) { // 5 Sekunden erreicht?
+        this.idleTime += 100;
+        if (this.idleTime >= 5000) {
             this.isLongIdle = true;
             this.playAnimation(this.IMAGES_IDLE_LONG);
         } else {

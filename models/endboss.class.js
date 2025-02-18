@@ -162,16 +162,16 @@ class Endboss extends MovableObject {
     }
 
     takeDamage() {
-        if (this.isHurtStatus) return;  // Verhindert mehrfaches Auslösen
+        if (this.isHurtStatus) return;
     
         this.isHurtStatus = true;
-        this.isWalking = false;  // Stoppt das Laufen kurzzeitig
+        this.isWalking = false;
         this.playAnimation(this.IMAGES_HURT);
         
         setTimeout(() => {
             this.isHurtStatus = false;
-            this.isWalking = true;  // Wieder laufen nach Schaden
-        }, 500);  // 500ms Hurt-Animation, dann zurück zur Laufbewegung
+            this.isWalking = true;
+        }, 500);
     }
 
     die() {
