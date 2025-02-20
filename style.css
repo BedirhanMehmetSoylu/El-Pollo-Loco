@@ -10,7 +10,6 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
     background-image: url('./img/10_background/desert-1920.jpg');
     background-size: cover;
     height: 100vh;
@@ -19,8 +18,90 @@ body {
 
 h1 {
     font-size: 64px;
+    color: yellow;
+    text-shadow: 5px 5px 7px rgba(0, 0, 0, 1);
+}
+
+.game-screen {
+    position: relative;
 }
 
 canvas {
     background-color: black;
+    box-shadow: 8px 8px 24px 0px rgba(0, 0, 0, 1);
+}
+
+.screen {
+    display: flex;
+    max-width: 720px;
+    height: 480px;
+    position: relative;
+}
+
+.screen img {
+    max-width: 720px;
+    height: 480px;
+}
+
+.play {
+    position: absolute;
+    top: 16px;
+    left: 290px;
+    color: white;
+    font-size: 32px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.pause {
+    position: absolute;
+    top: 16px;
+    left: 330px;
+    cursor: pointer;
+}
+
+.play:hover {
+    cursor: pointer;
+}
+
+.play img {
+    width: 50px;
+    height: 50px;
+}
+
+.info-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 700px;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 24px;
+    border-color: white;
+    border-style: solid;
+    margin-top: 16px;
+    padding: 8px;
+}
+
+.controls-headline {
+    color: white;
+    font-size: 24px;
+    padding-bottom: 8px;
+}
+
+.controls-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    color: white;
+}
+
+.controls-container img {
+    width: 40px;
+}
+
+.keyboard-keys {
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }

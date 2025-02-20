@@ -25,12 +25,46 @@
     <script src="./js/game.js"></script>
 
 </head>
-<body onload="init()">
-    
+<!-- onload="init()" -->
+<body>
     <h1>El Pollo Loco</h1>
+    <div id="intro" class="screen">
+        <img src="./img/9_intro_outro_screens/start/startscreen_1.png" alt="">
+        <div class="play" onclick="init()">
+            <img src="./img/11_buttons/play.png" alt="">
+            <span>Play</span>
+        </div>
+    </div>
+    <div class="game-screen">
+        <canvas id="canvas" width="720" height="480" style="display: none;">
+        </canvas>
+        <img class="pause" src="./img/11_buttons/pause.png" alt="">
+    </div>
 
-    <canvas id="canvas" width="720" height="480">
-
-    </canvas>
+    <div class="info-container">
+        <span class="controls-headline">Controls</span>
+        <div class="controls-container">
+            <div>
+                <div class="keyboard-keys">
+                    <img src="./img/11_buttons/e-key.png" alt="">
+                    <span>Throw Salsa Bottle</span>
+                </div>
+                <div class="keyboard-keys">
+                    <img src="./img/11_buttons/space-key.png" alt="">
+                    <span>Jump</span>
+                </div>
+            </div>
+            <div>
+                <div class="keyboard-keys">
+                    <img src="./img/11_buttons/left-key.png" alt="">
+                    <span>Move Left</span>
+                </div>
+                <div class="keyboard-keys">
+                    <img src="./img/11_buttons/right-key.png" alt="">
+                    <span>Move Right</span>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

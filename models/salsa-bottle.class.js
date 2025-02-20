@@ -24,7 +24,9 @@ class SalsaBottle extends MovableObject {
 
     animate() {
         setInterval(() => {
-            this.playAnimation(this.IMAGES_BOTTLE);
+            if (!this.pauseAnimation) {
+                this.playAnimation(this.IMAGES_BOTTLE);
+            }
         }, 400);
     }
 }

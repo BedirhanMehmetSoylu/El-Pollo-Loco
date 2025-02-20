@@ -39,13 +39,13 @@ class Chicken extends MovableObject {
     
     animate() {
         setInterval(() => {
-            if (!this.isDeadStatus) {
+            if (!this.isDeadStatus && !this.pauseAnimation) {
                 this.moveLeft();
             }
         }, 1000 / 60);
     
         setInterval(() => {
-            if (!this.isDeadStatus) {
+            if (!this.isDeadStatus && !this.pauseAnimation) {
                 this.playAnimation(this.IMAGES_WALKING);
             }
         }, 150);
@@ -93,13 +93,13 @@ class ChickenSmall extends MovableObject {
     
     animate() {
         setInterval(() => {
-            if (!this.isDeadStatus) {
+            if (!this.isDeadStatus && !this.pauseAnimation) {
                 this.moveLeft();
             }
         }, 1000 / 60);
     
         setInterval(() => {
-            if (!this.isDeadStatus) {
+            if (!this.isDeadStatus && !this.pauseAnimation) {
                 this.playAnimation(this.IMAGES_WALKING);
             }
         }, 150);
