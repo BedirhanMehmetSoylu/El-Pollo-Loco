@@ -96,7 +96,7 @@ class Endboss extends MovableObject {
         if (!this.activated) return;
 
         setInterval(() => {
-            if (!this.alertMode && !this.attacking && !this.isDeadStatus) {
+            if (!this.alertMode && !this.attacking && !this.isDeadStatus && !this.pauseAnimation) {
                 if (this.x < this.character.x) {
                     this.moveRight();
                     this.otherDirection = true;
@@ -111,25 +111,25 @@ class Endboss extends MovableObject {
         }, 1000 / 60);
 
         setInterval(() => {
-            if (this.alertMode && !this.alertAnimationPlayed) {
+            if (this.alertMode && !this.alertAnimationPlayed && !this.pauseAnimation) {
                 this.playAnimation(this.IMAGES_ALERT);
             }
         }, 150);
 
         setInterval(() => {
-            if (this.x <= 2600 && !this.alertAnimationPlayed) {
+            if (this.x <= 2600 && !this.alertAnimationPlayed && !this.pauseAnimation) {
                 this.enterAlertMode();
             }
         }, 1000 / 60);
 
         setInterval(() => {
-            if (this.isHurtStatus) {
+            if (this.isHurtStatus && !this.pauseAnimation) {
                 this.playAnimation(this.IMAGES_HURT);
             }
         }, 100);
 
         setInterval(() => {
-            if (this.isDeadStatus) {
+            if (this.isDeadStatus && !this.pauseAnimation) {
                 this.playAnimation(this.IMAGES_DEAD);
             }
         }, 100);
@@ -153,7 +153,9 @@ class Endboss extends MovableObject {
         this.attacking = true;
         this.isWalking = false;
         this.alertMode = false;  
-        this.playAnimation(this.IMAGES_ATTACK);
+        if (!this.pauseAnimation) {
+            this.playAnimation(this.IMAGES_ATTACK);    
+        }
     
         setTimeout(() => {
             this.attacking = false;
@@ -166,7 +168,9 @@ class Endboss extends MovableObject {
     
         this.isHurtStatus = true;
         this.isWalking = false;
-        this.playAnimation(this.IMAGES_HURT);
+        if (!this.pauseAnimation) {
+            this.playAnimation(this.IMAGES_HURT);  
+        }
         
         setTimeout(() => {
             this.isHurtStatus = false;

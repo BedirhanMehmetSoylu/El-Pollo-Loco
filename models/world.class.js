@@ -72,7 +72,7 @@ class World {
                         }, 250)
                     }
                 } 
-                else if (!this.character.isHurt()) { 
+                else if (!this.character.isHurt() && !this.character.pauseAnimation) { 
                     this.character.hit();
                     this.statusBarHealth.setPercentage(this.character.energy);
                 }
@@ -108,7 +108,7 @@ class World {
     }
 
     checkCollisionsEndboss() {
-        if (this.endboss.isColliding(this.character)) {
+        if (this.endboss.isColliding(this.character) && !this.endboss.pauseAnimation) {
             this.character.hit();
             this.statusBarHealth.setPercentage(this.character.energy);
             this.endboss.attack();
@@ -181,7 +181,7 @@ class World {
         }
         
         mo.draw(this.ctx);
-        mo.drawFrame(this.ctx);
+        // mo.drawFrame(this.ctx);
 
         if (mo.otherDirection) {
             this.flipImageBack(mo);

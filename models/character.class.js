@@ -5,6 +5,8 @@ class Character extends MovableObject {
     speed = 8;
     idleTime = 0;
     isLongIdle = false;
+    lost = false;
+    isGameOver = false;
     IMAGES_IDLE = [
         './img/2_character_pepe/1_idle/idle/I-1.png',
         './img/2_character_pepe/1_idle/idle/I-1.png',
@@ -122,8 +124,12 @@ class Character extends MovableObject {
         }, 1000 / 60)
 
         setInterval(() => {
-            if (this.isDead()) {
+            if (this.isDead() && !this.isGameOver) {
+                this.isGameOver = true;
                 this.playAnimation(this.IMAGES_DEAD);
+                this.lost = true;
+                pauseGame();
+                gameOver();
             } else if (this.isHurt() && !this.pauseAnimation) {
                 this.playAnimation(this.IMAGES_HURT);
             } else if (this.isAboveGround() && !this.pauseAnimation) {
