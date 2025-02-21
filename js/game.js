@@ -9,7 +9,8 @@ function init() {
     document.getElementById('gameScreen').style.display = 'block'
     canvas = document.getElementById('canvas');
     canvas.style.display = 'block';
-    world = new World(canvas, keyboard);
+    // world = new World(canvas, keyboard);
+    restartGame();
 
     setTimeout(() => {
         setPauseAnimationForAllMovableObjects();
@@ -97,25 +98,104 @@ function resumeGame() {
     }
 }
 
+function gameWon () {
+    document.getElementById('gamewon-options').style.display ='flex';
+    pauseGame();
+}
+
 function gameOver() {
     document.getElementById('gameoverOverlay').style.display = 'block';
     document.getElementById('gameoverOptions').style.display = 'flex';
 }
 
-function restartGame() {
-    // world.character.lost = false;
+function backToMenu() {
+    document.getElementById('intro').style.display = 'block';
+    document.getElementById('gameScreen').style.display = 'none'
+    document.getElementById('gamewon-options').style.display ='none';
+    canvas = document.getElementById('canvas');
+    canvas.style.display = 'none'
+    world.endboss.isGameWon = false;
+}
 
+function restartGame() {
+    if (world) {
+        world = null;
+    }
+
+    const newLevel = new Level(
+        [
+            new ChickenSmall(),
+            new ChickenSmall(),
+            new ChickenSmall(),
+            new ChickenSmall(),
+            new ChickenSmall(),
+            new Chicken(),
+            new Chicken(),
+            new Chicken(),
+        ],
+        [
+            new Cloud(),
+        ],
+        [
+            new BackgroundObject('./img/5_background/layers/air.png', -719),
+            new BackgroundObject('./img/5_background/layers/3_third_layer/2.png', -719),
+            new BackgroundObject('./img/5_background/layers/2_second_layer/2.png', -719),
+            new BackgroundObject('./img/5_background/layers/1_first_layer/2.png', -719),
+
+            new BackgroundObject('./img/5_background/layers/air.png', 0),
+            new BackgroundObject('./img/5_background/layers/3_third_layer/1.png', 0),
+            new BackgroundObject('./img/5_background/layers/2_second_layer/1.png', 0),
+            new BackgroundObject('./img/5_background/layers/1_first_layer/1.png', 0),
+            new BackgroundObject('./img/5_background/layers/air.png', 719),
+            new BackgroundObject('./img/5_background/layers/3_third_layer/2.png', 719),
+            new BackgroundObject('./img/5_background/layers/2_second_layer/2.png', 719),
+            new BackgroundObject('./img/5_background/layers/1_first_layer/2.png', 719),
+
+            new BackgroundObject('./img/5_background/layers/air.png', 719*2),
+            new BackgroundObject('./img/5_background/layers/3_third_layer/1.png', 719*2),
+            new BackgroundObject('./img/5_background/layers/2_second_layer/1.png', 719*2),
+            new BackgroundObject('./img/5_background/layers/1_first_layer/1.png', 719*2),
+            new BackgroundObject('./img/5_background/layers/air.png', 719*3),
+            new BackgroundObject('./img/5_background/layers/3_third_layer/2.png', 719*3),
+            new BackgroundObject('./img/5_background/layers/2_second_layer/2.png', 719*3),
+            new BackgroundObject('./img/5_background/layers/1_first_layer/2.png', 719*3)
+        ],
+        [
+            new Coins(),
+            new Coins(),
+            new Coins(),
+            new Coins(),
+            new Coins(),
+            new Coins(),
+            new Coins(),
+            new Coins(),
+            new Coins(),
+            new Coins()
+        ],
+        [
+            new SalsaBottle(),
+            new SalsaBottle(),
+            new SalsaBottle(),
+            new SalsaBottle(),
+            new SalsaBottle(),
+            new SalsaBottle(),
+            new SalsaBottle(),
+            new SalsaBottle(),
+            new SalsaBottle(),
+            new SalsaBottle()
+        ]
+    );
+
+
+    world = new World(canvas, keyboard);
+    world.level = newLevel;
+    world.setWorld();
+    world.run();
     document.getElementById('gameoverOverlay').style.display = 'none';
     document.getElementById('gameoverOptions').style.display = 'none';
-
-    let canvas = document.getElementById('canvas');
-    canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
-    const level1 = new Level();
-    world = new World(canvas, keyboard);
-    setTimeout(() => {
-        setPauseAnimationForAllMovableObjects();
-    }, 100);
+    resumeGame();
 }
+
 
 document.addEventListener('keydown', (event) => {    
     if (event.keyCode == 40) {

@@ -131,6 +131,7 @@ class Endboss extends MovableObject {
         setInterval(() => {
             if (this.isDeadStatus && !this.pauseAnimation) {
                 this.playAnimation(this.IMAGES_DEAD);
+                gameWon();
             }
         }, 100);
     }
@@ -182,7 +183,6 @@ class Endboss extends MovableObject {
         this.isDeadStatus = true;
         this.attacking = false;
         this.isWalking = false;
-        this.alertMode = false;  
+        this.alertMode = false;
     }
 }
-
