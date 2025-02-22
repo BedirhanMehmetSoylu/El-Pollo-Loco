@@ -112,7 +112,14 @@ canvas {
 .pause {
     position: absolute;
     top: 16px;
-    left: 330px;
+    left: 300px;
+    cursor: pointer;
+}
+
+.mute {
+    position: absolute;
+    top: 16px;
+    left: 350px;
     cursor: pointer;
 }
 

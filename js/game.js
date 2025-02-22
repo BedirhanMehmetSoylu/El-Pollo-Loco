@@ -6,17 +6,22 @@ let intervalIds = [];
 
 function init() {
     document.getElementById('intro').style.display = 'none';
-    document.getElementById('gameScreen').style.display = 'block'
+    document.getElementById('gameScreen').style.display = 'block';
     canvas = document.getElementById('canvas');
     canvas.style.display = 'block';
-    // world = new World(canvas, keyboard);
+
+    if (isSoundOn) {
+        backgroundMusic.play();
+        chickenSound.play();
+    }
+
     restartGame();
 
     setTimeout(() => {
         setPauseAnimationForAllMovableObjects();
+        setPlaySoundForAllMovableObjects();
     }, 100);
 }
-
 function setPauseAnimationForAllMovableObjects() {
     if (!world) return;
 
@@ -36,7 +41,28 @@ function setPauseAnimationForAllMovableObjects() {
     });
 }
 
+function setPlaySoundForAllMovableObjects() {
+    if (!world) return;
+
+    let allMovableObjects = [
+        world.character,
+        world.endboss,
+        ...(world.level?.enemies || []),
+        ...(world.level?.coins || []),
+        ...(world.level?.bottles || []),
+        ...(world.level?.clouds || [])
+    ];
+
+    allMovableObjects.forEach(obj => {
+        if (obj instanceof MovableObject) {
+            obj.playSounds = true;
+        }
+    });
+}
+
 function togglePause() {
+    console.log('2222');
+    
     if (isPaused) {
         resumeGame();
     } else {
@@ -46,9 +72,9 @@ function togglePause() {
 
 function pauseGame() {
     if (!world) return;
-    
+
     isPaused = true;
-    
+
     let allMovableObjects = [
         world.character,
         world.endboss,
@@ -57,12 +83,17 @@ function pauseGame() {
         ...(world.level?.bottles || []),
         ...(world.level?.clouds || [])
     ];
-    
+
     allMovableObjects.forEach(obj => {
         if (obj instanceof MovableObject) {
             obj.pauseAnimation = true;
         }
     });
+
+    if (isSoundOn) {
+        backgroundMusic.pause();
+        chickenSound.pause();
+    }
 
     let pauseButton = document.querySelector('.pause');
     if (pauseButton) {
@@ -91,12 +122,18 @@ function resumeGame() {
         }
     });
 
+    if (isSoundOn) {
+        backgroundMusic.play();
+        chickenSound.play();
+    }
+
     let pauseButton = document.querySelector('.pause');
     if (pauseButton) {
         pauseButton.src = "./img/11_buttons/pause.png";
         pauseButton.setAttribute("onclick", "pauseGame()");
     }
 }
+
 
 function gameWon () {
     document.getElementById('gamewon-options').style.display ='flex';

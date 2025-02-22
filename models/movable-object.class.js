@@ -15,6 +15,7 @@ class MovableObject extends DrawableObject {
         bottom: 0
     }
     pauseAnimation = true;
+    playSounds = false;
 
     applyGravity() {
         setInterval(() => {
@@ -109,4 +110,12 @@ class MovableObject extends DrawableObject {
         this.speedY = 20;
         this.lastBounce = new Date().getTime();
     }    
+
+    playSound(src) {
+        if (this.playSounds) {
+            let sound = new Audio(src);
+            sound.volume = 0.15; // Lautstärke anpassen (0.0 - 1.0)
+            sound.play(); 
+        }
+    }
 }
