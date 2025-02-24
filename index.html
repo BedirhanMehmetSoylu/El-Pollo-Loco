@@ -54,6 +54,24 @@
             <img src="./img/9_intro_outro_screens/game_over/won.png" alt="">
             <span class="gamewon-options" onclick="backToMenu()">BACK TO MENU</span>
         </div>
+        <div class="mobile-controls-container" style="display: none;">
+            <div class="mobile-controls-split">
+                <div ontouchstart="keyboard.LEFT = true" ontouchend="keyboard.LEFT = false" class="mobile-controls">
+                    <img src="./img/11_buttons/moveLeft.png" alt="">
+                </div>
+                <div ontouchstart="keyboard.RIGHT = true" ontouchend="keyboard.RIGHT = false" class="mobile-controls">
+                    <img src="./img/11_buttons/moveRight.png" alt="">
+                </div>
+            </div>
+            <div class="mobile-controls-split">
+                <div ontouchstart="keyboard.SPACE = true" ontouchend="keyboard.SPACE = false" class="mobile-controls">
+                    <img class="jump-button" src="./img/2_character_pepe/3_jump/J-35.png" alt="">
+                </div>
+                <div ontouchstart="keyboard.E = true" ontouchend="keyboard.E = false" class="mobile-controls">
+                    <img class="throw-button" src="./img/6_salsa_bottle/salsa_bottle.png" alt="">
+                </div>
+            </div>
+        </div>
         <div id="keyboardControls" class="info-container" style="display: none;">
             <span class="controls-headline">Controls</span>
             <div class="controls-container">
@@ -80,9 +98,6 @@
             </div>
                 <span class="back-to-game" onclick="closeControlsView()">Back to Game</span>
         </div>
-    </div>
-    
-
-    
+    </div>    
 </body>
 </html>

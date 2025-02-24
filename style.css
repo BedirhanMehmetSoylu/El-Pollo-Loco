@@ -145,6 +145,41 @@ canvas {
     height: 50px;
 }
 
+.mobile-controls-container {
+    width: 100%;
+    position: absolute;
+    bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.mobile-controls-split {
+    display: flex;
+    gap: 8px;
+    padding: 0 32px;
+}
+
+.mobile-controls {
+    width: 60px;
+    height: 60px;
+    border-radius: 16px;
+    border-style: solid;
+    border-color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+.jump-button {
+    width: 50px;
+    padding-bottom: 32px;
+}
+
+.throw-button {
+    width: 60px;
+}
+
 .info-container {
     position: absolute;
     bottom: 0;

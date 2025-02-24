@@ -177,7 +177,7 @@ class Character extends MovableObject {
 
     playJumpSound() {
         let now = Date.now();
-        let cooldown = 450;
+        let cooldown = 350;
 
         console.log("playJumpSound aufgerufen!");
 

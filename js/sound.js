@@ -2,7 +2,7 @@ let isSoundOn = localStorage.getItem("isSoundOn") === "true" ? true : false;
 
 let backgroundMusic = new Audio('./sounds/background.mp3');
 backgroundMusic.loop = true;
-backgroundMusic.volume = 0.025;
+backgroundMusic.volume = 0.1;
 
 let chickenSound = new Audio('./sounds/chicken-background.mp3');
 chickenSound.loop = true;
