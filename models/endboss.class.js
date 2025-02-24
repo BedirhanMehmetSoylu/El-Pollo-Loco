@@ -65,6 +65,8 @@ class Endboss extends MovableObject {
         './img/4_enemie_boss_chicken/5_dead/G26.png'
     ];
 
+    SOUND_HURT = new Audio('./sounds/endboss-hurt.mp3');
+
     offset = {
         top: 60,
         bottom: 0,
@@ -171,12 +173,21 @@ class Endboss extends MovableObject {
         this.isWalking = false;
         if (!this.pauseAnimation) {
             this.playAnimation(this.IMAGES_HURT);  
+            this.playHurtSound();
         }
         
         setTimeout(() => {
             this.isHurtStatus = false;
             this.isWalking = true;
         }, 500);
+    }
+
+    playHurtSound() {
+        if (this.playSounds && !this.hurtSoundCooldown || Date.now() - this.hurtSoundCooldown > 1000) {
+            this.SOUND_HURT.currentTime = 1;
+            this.SOUND_HURT.play();
+            this.hurtSoundCooldown = Date.now();
+        }
     }
 
     die() {

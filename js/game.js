@@ -22,6 +22,7 @@ function init() {
         setPlaySoundForAllMovableObjects();
     }, 100);
 }
+
 function setPauseAnimationForAllMovableObjects() {
     if (!world) return;
 
@@ -37,25 +38,6 @@ function setPauseAnimationForAllMovableObjects() {
     allMovableObjects.forEach(obj => {
         if (obj instanceof MovableObject) {
             obj.pauseAnimation = false;
-        }
-    });
-}
-
-function setPlaySoundForAllMovableObjects() {
-    if (!world) return;
-
-    let allMovableObjects = [
-        world.character,
-        world.endboss,
-        ...(world.level?.enemies || []),
-        ...(world.level?.coins || []),
-        ...(world.level?.bottles || []),
-        ...(world.level?.clouds || [])
-    ];
-
-    allMovableObjects.forEach(obj => {
-        if (obj instanceof MovableObject) {
-            obj.playSounds = true;
         }
     });
 }
@@ -138,11 +120,19 @@ function resumeGame() {
 function gameWon () {
     document.getElementById('gamewon-options').style.display ='flex';
     pauseGame();
+
+    if (isSoundOn) {
+        gameWonSound.play();
+    }
 }
 
 function gameOver() {
     document.getElementById('gameoverOverlay').style.display = 'block';
     document.getElementById('gameoverOptions').style.display = 'flex';
+    
+    if (isSoundOn) {
+        gameOverSound.play();
+    }
 }
 
 function backToMenu() {

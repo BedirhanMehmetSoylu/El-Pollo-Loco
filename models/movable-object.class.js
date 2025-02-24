@@ -37,6 +37,10 @@ class MovableObject extends DrawableObject {
         }
     }
 
+    isLanded() {
+        return this.previousY < this.y && !this.isAboveGround();
+    }    
+
     isColliding(mo) {
         let currentTime = new Date().getTime();
         if (currentTime - this.lastBounce < 100) {
@@ -114,7 +118,7 @@ class MovableObject extends DrawableObject {
     playSound(src) {
         if (this.playSounds) {
             let sound = new Audio(src);
-            sound.volume = 0.15; // Lautstärke anpassen (0.0 - 1.0)
+            sound.volume = 0.15;
             sound.play(); 
         }
     }

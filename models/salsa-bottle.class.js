@@ -8,6 +8,8 @@ class SalsaBottle extends MovableObject {
         './img/6_salsa_bottle/2_salsa_bottle_on_ground.png'
     ]
 
+    SOUND_COLLECT = new Audio('./sounds/bottle-clink.mp3');
+
     offset = {
         top: 15,
         bottom: 10,
@@ -28,5 +30,12 @@ class SalsaBottle extends MovableObject {
                 this.playAnimation(this.IMAGES_BOTTLE);
             }
         }, 400);
+    }
+
+    playCollectSound() {
+        if (this.playSounds) {
+            this.SOUND_COLLECT.volume = 0.4;
+            this.SOUND_COLLECT.play();
+        }
     }
 }

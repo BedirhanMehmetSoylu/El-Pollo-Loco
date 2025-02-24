@@ -4,6 +4,10 @@ class Character extends MovableObject {
     y = 150;
     speed = 8;
     idleTime = 0;
+    lastJumpSoundTime = 0;
+    lastHurtSoundTime = 0;
+    lastLandingTime = 0;
+    previousY = this.y;
     isLongIdle = false;
     lost = false;
     isGameOver = false;
@@ -74,6 +78,10 @@ class Character extends MovableObject {
         './img/2_character_pepe/4_hurt/H-42.png',
         './img/2_character_pepe/4_hurt/H-43.png'
     ];
+    SOUND_JUMP = new Audio('./sounds/character-jump.mp3');
+    SOUND_SNORING = new Audio('./sounds/snoring.mp3');
+    SOUND_HURT = new Audio('./sounds/character-hurt.mp3');
+    SOUND_LANDING = new Audio('./sounds/landing.mp3');
     world;
     offset = {
         top: 110,
@@ -120,6 +128,12 @@ class Character extends MovableObject {
                 this.resetIdleTimer();
             }
 
+            if (this.isLanded()) {
+                this.playLandingSound();
+            }
+
+            this.previousY = this.y;
+
             this.world.camera_x = -this.x + 100;
         }, 1000 / 60)
 
@@ -132,8 +146,10 @@ class Character extends MovableObject {
                 gameOver();
             } else if (this.isHurt() && !this.pauseAnimation) {
                 this.playAnimation(this.IMAGES_HURT);
+                this.playHurtSound();
             } else if (this.isAboveGround() && !this.pauseAnimation) {
                 this.playAnimation(this.IMAGES_JUMPING);
+                this.playJumpSound();
             } else if ((this.world.keyboard.RIGHT || this.world.keyboard.LEFT) && !this.pauseAnimation) {
                 this.playAnimation(this.IMAGES_WALKING);
             } else if (!this.pauseAnimation) {
@@ -147,6 +163,7 @@ class Character extends MovableObject {
         if (this.idleTime >= 5000) {
             this.isLongIdle = true;
             this.playAnimation(this.IMAGES_IDLE_LONG);
+            this.playSnoringSound();
         } else {
             this.playAnimation(this.IMAGES_IDLE);
         }
@@ -155,5 +172,59 @@ class Character extends MovableObject {
     resetIdleTimer() {
         this.idleTime = 0;
         this.isLongIdle = false;
+        this.stopSnoringSound();
     }
+
+    playJumpSound() {
+        let now = Date.now();
+        let cooldown = 450;
+
+        console.log("playJumpSound aufgerufen!");
+
+        if (now - this.lastJumpSoundTime >= cooldown && this.playSounds) {
+            this.SOUND_JUMP.volume = 0.5;
+            this.SOUND_JUMP.currentTime = 0;
+            this.SOUND_JUMP.play();
+            this.lastJumpSoundTime = now;
+        }
+    }
+
+    playHurtSound() {
+        let now = Date.now();
+        let cooldown = 1000;
+
+        if (now - this.lastHurtSoundTime >= cooldown && this.playSounds) {
+            this.SOUND_HURT.volume = 0.5;
+            this.SOUND_HURT.currentTime = 0.4;
+            this.SOUND_HURT.play();
+            this.lastHurtSoundTime = now;
+        }
+    }
+
+    playSnoringSound() {
+        if (this.playSounds) {
+            this.SOUND_SNORING.play();
+        } else {
+            this.SOUND_SNORING.pause();
+        }
+    }
+
+    stopSnoringSound() {
+        if (this.playSounds) {
+            this.SOUND_SNORING.pause(); 
+            this.SOUND_SNORING.currentTime = 0;
+        }
+    }
+
+    playLandingSound() {
+        let now = Date.now();
+        let cooldown = 400;
+    
+        if (now - this.lastLandingTime >= cooldown && this.playSounds) {
+            this.SOUND_LANDING.volume = 0.3;
+            this.SOUND_LANDING.currentTime = 0;
+            this.SOUND_LANDING.play();
+            this.lastLandingTime = now;
+        }
+    }    
 }

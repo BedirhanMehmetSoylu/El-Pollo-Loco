@@ -11,6 +11,7 @@ class Chicken extends MovableObject {
     IMAGES_DEAD = [
         './img/3_enemies_chicken/chicken_normal/2_dead/dead.png'
     ];
+    SOUND_DEAD = './sounds/chicken-hurt.mp3';
 
     offset = {
         top: 0,
@@ -31,11 +32,21 @@ class Chicken extends MovableObject {
     die() {
         this.isDeadStatus = true;
         this.playAnimation(this.IMAGES_DEAD);
-        
+    
+        let deathSound = new Audio(this.SOUND_DEAD);
+        deathSound.volume = 0.1;
+        if (this.playSounds) {
+            deathSound.play();
+        }
+    
+        setTimeout(() => {
+            deathSound.pause();
+        }, 500);
+    
         setTimeout(() => {
             this.img = this.imageCache[this.IMAGES_DEAD[this.IMAGES_DEAD.length - 1]];
         }, this.IMAGES_DEAD.length * 100);
-    }
+    }    
     
     animate() {
         setInterval(() => {
@@ -66,6 +77,7 @@ class ChickenSmall extends MovableObject {
     IMAGES_DEAD = [
         './img/3_enemies_chicken/chicken_small/2_dead/dead.png'
     ];
+    SOUND_DEAD = './sounds/small-chicken-short.mp3';
     offset = {
         top: 0,
         bottom: 0,
@@ -85,6 +97,16 @@ class ChickenSmall extends MovableObject {
     die() {
         this.isDeadStatus = true;
         this.playAnimation(this.IMAGES_DEAD);
+
+        let deathSound = new Audio(this.SOUND_DEAD);
+        deathSound.volume = 0.1;
+        if (this.playSounds) {
+            deathSound.play();
+        }
+    
+        setTimeout(() => {
+            deathSound.pause();
+        }, 500);
         
         setTimeout(() => {
             this.img = this.imageCache[this.IMAGES_DEAD[this.IMAGES_DEAD.length - 1]];

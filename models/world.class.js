@@ -84,6 +84,7 @@ class World {
     this.throwableObjects.forEach((bottle, bottleIndex) => {
         this.level.enemies.forEach((enemy, enemyIndex) => {
             if (bottle.isColliding(enemy)) {
+                bottle.playSplashSound();
                 enemy.energy = 0;
                 if (enemy.energy <= 0) {
                     enemy.die();
@@ -96,6 +97,7 @@ class World {
         });
 
         if (bottle.isColliding(this.endboss)) {
+            bottle.playSplashSound();
             this.endboss.energy -= 20;
             this.statusBarEndboss.setPercentage(this.endboss.energy);
             this.endboss.takeDamage();
@@ -119,6 +121,7 @@ class World {
         setInterval(() => {
             this.level.coins.forEach((coin) => {
                  if (this.character.isColliding(coin)) {
+                     coin.playCollectSound(); // Sound abspielen
                      this.character.collectCoin();
                      this.level.coins.splice(this.level.coins.indexOf(coin), 1);
                      this.statusBarCoin.setPercentageCoin(this.character.coins);
@@ -131,6 +134,7 @@ class World {
         setInterval(() => {
             this.level.bottles.forEach((bottle) => {
                  if (this.character.isColliding(bottle)) {
+                     bottle.playCollectSound();
                      this.character.collectBottle();
                      this.level.bottles.splice(this.level.bottles.indexOf(bottle), 1);
                      this.statusBarBottle.setPercentageBottle(this.character.bottles);

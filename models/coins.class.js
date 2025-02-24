@@ -11,6 +11,7 @@ class Coins extends MovableObject {
         left: 30,
         right: 30
     }
+    SOUND_COLLECT = new Audio('./sounds/coin.mp3');
 
     constructor() {
         super().loadImage(this.IMAGES_COINS[0]);
@@ -26,5 +27,12 @@ class Coins extends MovableObject {
                 this.playAnimation(this.IMAGES_COINS); 
             }
         }, 200);
+    }
+
+    playCollectSound() {
+        if (this.playSounds) {
+            this.SOUND_COLLECT.volume = 0.4;
+            this.SOUND_COLLECT.play();
+        }
     }
 }
