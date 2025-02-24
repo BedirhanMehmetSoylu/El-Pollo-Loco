@@ -1,4 +1,4 @@
-let isSoundOn = true;
+let isSoundOn = localStorage.getItem("isSoundOn") === "true" ? true : false;
 
 let backgroundMusic = new Audio('./sounds/background.mp3');
 backgroundMusic.loop = true;
@@ -13,6 +13,8 @@ let gameOverSound = new Audio('./sounds/gameover.mp3');
 
 function toggleSound() {
     isSoundOn = !isSoundOn;
+
+    localStorage.setItem("isSoundOn", isSoundOn);
 
     if (isSoundOn) {
         backgroundMusic.play();

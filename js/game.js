@@ -13,6 +13,9 @@ function init() {
     if (isSoundOn) {
         backgroundMusic.play();
         chickenSound.play();
+        document.querySelector('.mute').src = "./img/11_buttons/unmute.png";
+    } else {
+        document.querySelector('.mute').src = "./img/11_buttons/mute.png";
     }
 
     restartGame();
