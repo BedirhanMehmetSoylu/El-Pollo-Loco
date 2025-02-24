@@ -121,7 +121,7 @@ function resumeGame() {
 
 
 function gameWon () {
-    document.getElementById('gamewon-options').style.display ='flex';
+    document.getElementById('gamewonOptions').style.display ='flex';
     pauseGame();
 
     if (isSoundOn) {
@@ -141,10 +141,20 @@ function gameOver() {
 function backToMenu() {
     document.getElementById('intro').style.display = 'block';
     document.getElementById('gameScreen').style.display = 'none'
-    document.getElementById('gamewon-options').style.display ='none';
+    document.getElementById('gamewonOptions').style.display ='none';
     canvas = document.getElementById('canvas');
     canvas.style.display = 'none'
     world.endboss.isGameWon = false;
+}
+
+function openControlsView() {
+    document.getElementById('keyboardControls').style.display = 'flex';
+    pauseGame();
+}
+
+function closeControlsView() {
+    document.getElementById('keyboardControls').style.display = 'none';
+    resumeGame();
 }
 
 function restartGame() {

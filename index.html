@@ -38,9 +38,10 @@
     <div id="gameScreen" class="game-screen" style="display: none;">
         <canvas id="canvas" width="720" height="480">
         </canvas>
-        <div>
+        <div class="controls">
             <img class="pause" src="./img/11_buttons/pause.png" alt="" onclick="togglePause()">
             <img class="mute" src="./img/11_buttons/unmute.png" alt="" onclick="toggleSound()">
+            <img class="keyboard-settings" src="./img/11_buttons/keyboard.png" alt="" onclick="openControlsView()">
         </div>
         <div id="gameoverOverlay" class="gameover-overlay" style="display: none;">
             <img src="./img/9_intro_outro_screens/game_over/oh no you lost!.png" alt="">
@@ -49,37 +50,39 @@
             <span onclick="backToMenu()">BACK TO MENU</span>
             <span onclick="restartGame()">RESTART</span>
         </div>
-        <div id="gamewon-options" class="gamewon-overlay" style="display: none;">
+        <div id="gamewonOptions" class="gamewon-overlay" style="display: none;">
             <img src="./img/9_intro_outro_screens/game_over/won.png" alt="">
             <span class="gamewon-options" onclick="backToMenu()">BACK TO MENU</span>
+        </div>
+        <div id="keyboardControls" class="info-container" style="display: none;">
+            <span class="controls-headline">Controls</span>
+            <div class="controls-container">
+                <div>
+                    <div class="keyboard-keys">
+                        <img src="./img/11_buttons/e-key.png" alt="">
+                        <span>Throw Salsa Bottle</span>
+                    </div>
+                    <div class="keyboard-keys">
+                        <img src="./img/11_buttons/space-key.png" alt="">
+                        <span>Jump</span>
+                    </div>
+                </div>
+                <div>
+                    <div class="keyboard-keys">
+                        <img src="./img/11_buttons/left-key.png" alt="">
+                        <span>Move Left</span>
+                    </div>
+                    <div class="keyboard-keys">
+                        <img src="./img/11_buttons/right-key.png" alt="">
+                        <span>Move Right</span>
+                    </div>
+                </div>
+            </div>
+                <span class="back-to-game" onclick="closeControlsView()">Back to Game</span>
         </div>
     </div>
     
 
-    <div class="info-container">
-        <span class="controls-headline">Controls</span>
-        <div class="controls-container">
-            <div>
-                <div class="keyboard-keys">
-                    <img src="./img/11_buttons/e-key.png" alt="">
-                    <span>Throw Salsa Bottle</span>
-                </div>
-                <div class="keyboard-keys">
-                    <img src="./img/11_buttons/space-key.png" alt="">
-                    <span>Jump</span>
-                </div>
-            </div>
-            <div>
-                <div class="keyboard-keys">
-                    <img src="./img/11_buttons/left-key.png" alt="">
-                    <span>Move Left</span>
-                </div>
-                <div class="keyboard-keys">
-                    <img src="./img/11_buttons/right-key.png" alt="">
-                    <span>Move Right</span>
-                </div>
-            </div>
-        </div>
-    </div>
+    
 </body>
 </html>
