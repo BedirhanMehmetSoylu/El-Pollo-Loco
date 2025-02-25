@@ -121,6 +121,7 @@ function resumeGame() {
 
 
 function gameWon () {
+    exitFullscreen();
     document.getElementById('gamewonOptions').style.display ='flex';
     pauseGame();
 
@@ -130,6 +131,7 @@ function gameWon () {
 }
 
 function gameOver() {
+    exitFullscreen();
     document.getElementById('gameoverOverlay').style.display = 'block';
     document.getElementById('gameoverOptions').style.display = 'flex';
     
@@ -234,6 +236,22 @@ function restartGame() {
     document.getElementById('gameoverOverlay').style.display = 'none';
     document.getElementById('gameoverOptions').style.display = 'none';
     resumeGame();
+}
+
+function toggleFullscreen() {
+    let canvas = document.getElementById("canvas");
+
+    if (!document.fullscreenElement) {
+        canvas.requestFullscreen();
+    } else {
+        document.exitFullscreen();
+    }
+}
+
+function exitFullscreen() {
+    if (document.fullscreenElement) {
+        document.exitFullscreen();
+    }
 }
 
 

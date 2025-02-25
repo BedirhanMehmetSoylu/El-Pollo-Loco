@@ -112,15 +112,15 @@ canvas {
 .controls {
     position: absolute;
     top: 24px;
-    left: 280px;
+    left: 270px;
     display: flex;
     flex-direction: row;
-    gap: 16px;
+    gap: 20px;
 }
 
 .controls img {
-    width: 40px;
-    height: 40px;
+    width: 32px;
+    height: 32px;
 }
 
 .pause {
@@ -128,6 +128,10 @@ canvas {
 }
 
 .mute {
+    cursor: pointer;
+}
+
+.fullscreen {
     cursor: pointer;
 }
 
@@ -149,7 +153,7 @@ canvas {
     width: 100%;
     position: absolute;
     bottom: 8px;
-    display: flex;
+    display: none;
     justify-content: space-between;
 }
 
@@ -225,3 +229,54 @@ canvas {
     cursor: pointer;
     color: #FFD800;
 }
+
+.turnDevice {
+    position: absolute;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    background-color: lightgray;
+    width: 100%;
+    height: 100vh;
+}
+
+@media (max-width: 1100px) {
+    .mobile-controls-container {
+        display: flex;
+    }
+
+    .keyboard-settings {
+        display: none;
+    }
+}
+
+@media (max-width: 728px) {
+    .turnDevice {
+        display: flex;
+    }
+
+    .screen {
+        display: none;
+    }
+
+    .game-screen {
+        display: none;
+    }
+}
+
+@media (max-width: 728px) and (orientation: landscape) {
+    .turnDevice {
+        display: none;
+    }
+
+    .screen {
+        display: flex;
+    }
+
+    .game-screen {
+        display: flex;
+    }
+}
+  
