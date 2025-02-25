@@ -6,7 +6,7 @@ let intervalIds = [];
 
 function init() {
     document.getElementById('intro').style.display = 'none';
-    document.getElementById('gameScreen').style.display = 'block';
+    document.getElementById('gameScreen').style.display = 'flex';
     canvas = document.getElementById('canvas');
     canvas.style.display = 'block';
 
@@ -239,12 +239,19 @@ function restartGame() {
 }
 
 function toggleFullscreen() {
-    let canvas = document.getElementById("canvas");
+    let gameScreen = document.getElementById("gameScreen");
 
     if (!document.fullscreenElement) {
-        canvas.requestFullscreen();
+        gameScreen.requestFullscreen().then(() => {
+            gameScreen.classList.add("fullscreen-active");
+            adjustControlsPosition();
+            adjustMobileControlsPosition();
+        });
     } else {
         document.exitFullscreen();
+        gameScreen.classList.remove("fullscreen-active");
+        adjustControlsPosition();
+        adjustMobileControlsPosition();
     }
 }
 
@@ -254,6 +261,47 @@ function exitFullscreen() {
     }
 }
 
+function adjustControlsPosition() {
+    let gameScreen = document.getElementById("gameScreen");
+    let canvas = document.getElementById("canvas");
+    let controls = document.querySelector(".controls");
+
+    if (document.fullscreenElement) {
+        let gameScreenHeight = gameScreen.clientHeight;
+        let canvasHeight = canvas.clientHeight;
+
+        let newTop = (gameScreenHeight - canvasHeight) / 2;
+        controls.style.top = `${newTop + 24}px`;
+    } else {
+        controls.style.top = "24px";
+    }
+}
+
+function adjustMobileControlsPosition() {
+    let gameScreen = document.getElementById("gameScreen");
+    let canvas = document.getElementById("canvas");
+    let mobileControls = document.querySelector(".mobile-controls-container");
+
+    if (document.fullscreenElement) {
+        let gameScreenHeight = gameScreen.clientHeight;
+        let canvasHeight = canvas.clientHeight;
+
+        let newBottom = (gameScreenHeight - canvasHeight) / 2;
+        mobileControls.style.bottom = `${newBottom + 8}px`;
+    } else {
+        mobileControls.style.bottom = "8px";
+    }
+}
+
+document.addEventListener("fullscreenchange", () => {
+    let gameScreen = document.getElementById("gameScreen");
+
+    if (!document.fullscreenElement) {
+        gameScreen.classList.remove("fullscreen-active");
+        adjustControlsPosition();
+        adjustMobileControlsPosition();
+    }
+});
 
 document.addEventListener('keydown', (event) => {    
     if (event.keyCode == 40) {
