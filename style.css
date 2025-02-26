@@ -120,12 +120,15 @@ canvas {
 .play {
     position: absolute;
     top: 16px;
-    left: 290px;
+    /* left: 290px; */
     color: white;
     font-size: 32px;
     display: flex;
     align-items: center;
     gap: 8px;
+
+    width: 100%;
+    justify-content: center;
 }
 
 .controls {
@@ -165,8 +168,8 @@ canvas {
 }
 
 .play img {
-    width: 50px;
-    height: 50px;
+    width: 50px !important;
+    height: 50px !important;
 }
 
 .mobile-controls-container {
@@ -212,6 +215,7 @@ canvas {
     align-items: center;
     justify-content: center;
     gap: 24px;
+    max-width: 1440px;
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
@@ -293,6 +297,12 @@ canvas {
     }
 }
 
+@media (max-width: 950px) and (orientation: landscape) {
+    body {
+        background-size: auto;
+    }
+}
+
 @media (max-width: 728px) and (orientation: landscape) {
     .turnDevice {
         display: none;
@@ -304,6 +314,53 @@ canvas {
 
     .game-screen {
         display: flex;
+    }
+}
+
+@media (max-width: 667px) and (orientation: landscape) {
+    .mobile-controls {
+        width: 50px;
+        height: 50px;
+    }
+
+    .jump-button {
+        width: 42px;
+    }
+
+    .throw-button {
+        width: 50px;
+    }
+}
+  
+@media (max-width: 580px) and (orientation: landscape) {
+    .intro {
+        width: 100%;
+        height: auto;
+    }
+
+    canvas {
+        width: 100%;
+        height: auto;
+    }
+
+    .game-screen {
+        width: 100%;
+        height: auto;
+    }
+
+    .gameover-overlay {
+        width: 100%;
+        height: auto;
+    }
+    
+    .screen {
+        width: 100vw;
+        height: auto;
+    }
+
+    .screen img {
+        width: 100%;
+        height: 100%;
     }
 }
   
