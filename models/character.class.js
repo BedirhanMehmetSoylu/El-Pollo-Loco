@@ -66,10 +66,16 @@ class Character extends MovableObject {
     ];
     IMAGES_DEAD = [
         './img/2_character_pepe/5_dead/D-51.png',
+        './img/2_character_pepe/5_dead/D-51.png',
+        './img/2_character_pepe/5_dead/D-52.png',
         './img/2_character_pepe/5_dead/D-52.png',
         './img/2_character_pepe/5_dead/D-53.png',
+        './img/2_character_pepe/5_dead/D-53.png',
+        './img/2_character_pepe/5_dead/D-54.png',
         './img/2_character_pepe/5_dead/D-54.png',
         './img/2_character_pepe/5_dead/D-55.png',
+        './img/2_character_pepe/5_dead/D-55.png',
+        './img/2_character_pepe/5_dead/D-56.png',
         './img/2_character_pepe/5_dead/D-56.png',
         './img/2_character_pepe/5_dead/D-57.png'
     ];
@@ -90,6 +96,10 @@ class Character extends MovableObject {
         right: 20
     }
 
+    /**
+     * Constructor for initializing the character.
+     * Loads images, applies gravity, and starts the animation loop.
+     */
     constructor() {
         super().loadImage('./img/2_character_pepe/2_walk/W-21.png');
         this.loadImages(this.IMAGES_IDLE);
@@ -102,6 +112,11 @@ class Character extends MovableObject {
         this.animate();
     }
 
+    /**
+     * Checks if the character is jumping on an enemy.
+     * @param {Object} enemy - The enemy object to check collision with.
+     * @returns {boolean} True if the character is jumping on the enemy, false otherwise.
+     */
     isJumpingOn(enemy) {
         return (
             this.y + this.height - this.offset.bottom < enemy.y + enemy.height / 2 &&
@@ -109,55 +124,122 @@ class Character extends MovableObject {
         );
     }
 
+    /**
+     * Initializes the animation for the character by handling movement and camera updates.
+     * It also manages the character's animation based on the game state (idle, walking, jumping, etc.).
+     * This method runs in intervals for continuous updates.
+     * 
+     * - `handleMovement()` handles user input and character movement.
+     * - `updateCameraPosition()` adjusts the camera to follow the character.
+     * - `handleAnimation()` updates the character's animation based on the game state.
+     * 
+     * @function animate
+     * @memberof Character
+     */
     animate() {
         setInterval(() => {
-            if (this.world.keyboard.LEFT && this.x > 0 && !this.pauseAnimation) {
-                this.moveLeft();
-                this.otherDirection = true;
-                this.resetIdleTimer();
-            }
-
-            if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x && !this.pauseAnimation) {
-                this.moveRight();
-                this.otherDirection = false;
-                this.resetIdleTimer();
-            }
-
-            if (this.world.keyboard.SPACE && !this.isAboveGround() && !this.pauseAnimation) {
-                this.jump();
-                this.resetIdleTimer();
-            }
-
-            if (this.isLanded()) {
-                this.playLandingSound();
-            }
-
-            this.previousY = this.y;
-
-            this.world.camera_x = -this.x + 100;
-        }, 1000 / 60)
-
+            this.handleMovement();
+            this.updateCameraPosition();
+        }, 1000 / 60);
+    
         setInterval(() => {
-            if (this.isDead() && !this.isGameOver) {
-                this.isGameOver = true;
-                this.playAnimation(this.IMAGES_DEAD);
-                this.lost = true;
-                pauseGame();
-                gameOver();
-            } else if (this.isHurt() && !this.pauseAnimation) {
-                this.playAnimation(this.IMAGES_HURT);
-                this.playHurtSound();
-            } else if (this.isAboveGround() && !this.pauseAnimation) {
-                this.playAnimation(this.IMAGES_JUMPING);
-                this.playJumpSound();
-            } else if ((this.world.keyboard.RIGHT || this.world.keyboard.LEFT) && !this.pauseAnimation) {
-                this.playAnimation(this.IMAGES_WALKING);
-            } else if (!this.pauseAnimation) {
-                this.handleIdleAnimation();
-            }
+            this.handleAnimation();
         }, 100);
     }
+    
+    /**
+     * Handles the movement of the character, including left, right, and jump actions.
+     * Resets idle timer and plays sound effects as necessary.
+     */
+    handleMovement() {
+        if (this.world.keyboard.LEFT && this.x > 0 && !this.pauseAnimation) {
+            this.moveLeft();
+            this.otherDirection = true;
+            this.resetIdleTimer();
+        }
+    
+        if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x && !this.pauseAnimation) {
+            this.moveRight();
+            this.otherDirection = false;
+            this.resetIdleTimer();
+        }
+    
+        if (this.world.keyboard.SPACE && !this.isAboveGround() && !this.pauseAnimation) {
+            this.jump();
+            this.resetIdleTimer();
+        }
+    
+        if (this.isLanded()) {
+            this.playLandingSound();
+        }
+    
+        this.previousY = this.y;
+    }
+    
+    /**
+     * Updates the camera position based on the character's horizontal position.
+     */
+    updateCameraPosition() {
+        this.world.camera_x = -this.x + 100;
+    }
+    
+    /**
+     * Handles the animation logic based on the character's current state.
+     * This includes playing animations for death, hurt, jumping, walking, and idle.
+     */
+    handleAnimation() {
+        if (this.isDead() && !this.isGameOver) {
+            this.handleGameOver();
+        } else if (this.isHurt() && !this.pauseAnimation) {
+            this.handleHurt();
+        } else if (this.isAboveGround() && !this.pauseAnimation) {
+            this.handleJumping();
+        } else if ((this.world.keyboard.RIGHT || this.world.keyboard.LEFT) && !this.pauseAnimation) {
+            this.handleWalking();
+        } else if (!this.pauseAnimation) {
+            this.handleIdleAnimation();
+        }
+    }
+    
+    /**
+     * Handles the game over animation and logic.
+     */
+    handleGameOver() {
+        this.playAnimation(this.IMAGES_DEAD);
+        this.isGameOver = true;
+        this.lost = true;
+        this.bottles = 0;
+        pauseGame();
+        gameOver();
+    }
+    
+    /**
+     * Handles the hurt animation and sound when the character is hurt.
+     */
+    handleHurt() {
+        this.playAnimation(this.IMAGES_HURT);
+        this.playHurtSound();
+    }
+    
+    /**
+     * Handles the jumping animation and sound.
+     */
+    handleJumping() {
+        this.playAnimation(this.IMAGES_JUMPING);
+        this.playJumpSound();
+    }
+    
+    /**
+     * Handles the walking animation.
+     */
+    handleWalking() {
+        this.playAnimation(this.IMAGES_WALKING);
+    }
 
+    /**
+     * Handles the idle animation. Plays a long idle animation after 5 seconds.
+     * Plays the snoring sound if idle time exceeds 5 seconds.
+     */
     handleIdleAnimation() {
         this.idleTime += 100;
         if (this.idleTime >= 5000) {
@@ -169,12 +251,18 @@ class Character extends MovableObject {
         }
     }
 
+    /**
+     * Resets the idle timer and stops the snoring sound.
+     */
     resetIdleTimer() {
         this.idleTime = 0;
         this.isLongIdle = false;
         this.stopSnoringSound();
     }
 
+    /**
+     * Plays the jump sound if the cooldown time has passed.
+     */
     playJumpSound() {
         let now = Date.now();
         let cooldown = 350;
@@ -189,6 +277,9 @@ class Character extends MovableObject {
         }
     }
 
+    /**
+     * Plays the hurt sound if the cooldown time has passed.
+     */
     playHurtSound() {
         let now = Date.now();
         let cooldown = 1000;
@@ -201,6 +292,10 @@ class Character extends MovableObject {
         }
     }
 
+    /**
+     * Plays the snoring sound when the character is idle for a long period.
+     * Pauses the sound if the character is not idle.
+     */
     playSnoringSound() {
         if (this.playSounds) {
             this.SOUND_SNORING.play();
@@ -209,6 +304,9 @@ class Character extends MovableObject {
         }
     }
 
+    /**
+     * Stops the snoring sound by pausing it and resetting the time.
+     */
     stopSnoringSound() {
         if (this.playSounds) {
             this.SOUND_SNORING.pause(); 
@@ -216,6 +314,9 @@ class Character extends MovableObject {
         }
     }
 
+    /**
+     * Plays the landing sound if the cooldown time has passed.
+     */
     playLandingSound() {
         let now = Date.now();
         let cooldown = 400;

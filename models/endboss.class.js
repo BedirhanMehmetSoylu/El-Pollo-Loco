@@ -74,6 +74,11 @@ class Endboss extends MovableObject {
         right: 5
     }
 
+    /**
+     * Creates an instance of the Endboss.
+     * 
+     * @param {Object} character The character (player) interacting with the Endboss.
+     */
     constructor(character) {
         super().loadImage(this.IMAGES_WALKING[0]);
         this.loadImages(this.IMAGES_WALKING);
@@ -88,56 +93,127 @@ class Endboss extends MovableObject {
         this.alertAnimationPlayed = false;
     }
 
+    /**
+     * Activates the Endboss.
+     * 
+     * @param {Object} character The character (player) interacting with the Endboss.
+     */
     activate(character) {
         this.activated = true;
         this.character = character;
         this.animate();
     }
 
+    /**
+     * Handles the animation for the enemy.
+     * Animates movement, alert mode, hurt status, and death sequence.
+     * 
+     * @function animate
+     * @memberof Enemy
+     */
     animate() {
-        if (!this.activated) return;
+        this.handleMovementAnimation();
+        this.handleAlertAnimation();
+        this.handleAlertModeTrigger();
+        this.handleHurtAnimation();
+        this.handleDeathAnimation();
+    }
 
+    /**
+     * Handles the movement animation of the enemy, including direction and walking animation.
+     * 
+     * @function handleMovementAnimation
+     * @memberof Enemy
+     */
+    handleMovementAnimation() {
         setInterval(() => {
             if (!this.alertMode && !this.attacking && !this.isDeadStatus && !this.pauseAnimation) {
-                if (this.x < this.character.x) {
-                    this.moveRight();
-                    this.otherDirection = true;
-                } else {
-                    this.moveLeft();
-                    this.otherDirection = false;
-                }
+                this.moveTowardsCharacter();
                 if (this.isWalking) {
                     this.playAnimation(this.IMAGES_WALKING);
                 }
             }
         }, 1000 / 60);
+    }
 
+    /**
+     * Moves the enemy towards the character based on position.
+     * 
+     * @function moveTowardsCharacter
+     * @memberof Enemy
+     */
+    moveTowardsCharacter() {
+        if (this.x < this.character.x) {
+            this.moveRight();
+            this.otherDirection = true;
+        } else {
+            this.moveLeft();
+            this.otherDirection = false;
+        }
+    }
+
+    /**
+     * Plays the alert animation when alert mode is active.
+     * 
+     * @function handleAlertAnimation
+     * @memberof Enemy
+     */
+    handleAlertAnimation() {
         setInterval(() => {
             if (this.alertMode && !this.alertAnimationPlayed && !this.pauseAnimation) {
                 this.playAnimation(this.IMAGES_ALERT);
             }
         }, 150);
+    }
 
+    /**
+     * Triggers alert mode when the enemy reaches a certain x position.
+     * 
+     * @function handleAlertModeTrigger
+     * @memberof Enemy
+     */
+    handleAlertModeTrigger() {
         setInterval(() => {
             if (this.x <= 2600 && !this.alertAnimationPlayed && !this.pauseAnimation) {
                 this.enterAlertMode();
             }
         }, 1000 / 60);
+    }
 
+    /**
+     * Handles the hurt animation when the enemy is hurt.
+     * 
+     * @function handleHurtAnimation
+     * @memberof Enemy
+     */
+    handleHurtAnimation() {
         setInterval(() => {
             if (this.isHurtStatus && !this.pauseAnimation) {
                 this.playAnimation(this.IMAGES_HURT);
             }
         }, 100);
+    }
 
+    /**
+     * Handles the death animation and actions after the enemy dies.
+     * 
+     * @function handleDeathAnimation
+     * @memberof Enemy
+     */
+    handleDeathAnimation() {
         setInterval(() => {
             if (this.isDeadStatus && !this.pauseAnimation) {
                 this.playAnimation(this.IMAGES_DEAD);
+                this.character.bottles = 0;
                 gameWon();
             }
         }, 100);
     }
 
+    /**
+     * Triggers the alert mode for the Endboss.
+     * The Endboss will stop walking and play an alert animation.
+     */
     enterAlertMode() {
         this.isWalking = false;
         this.alertMode = true;
@@ -150,6 +226,10 @@ class Endboss extends MovableObject {
         }, 1000);
     }
 
+    /**
+     * Makes the Endboss attack the player.
+     * Stops walking and plays an attack animation.
+     */
     attack() {
         if (this.attacking) return;
     
@@ -159,13 +239,16 @@ class Endboss extends MovableObject {
         if (!this.pauseAnimation) {
             this.playAnimation(this.IMAGES_ATTACK);    
         }
-    
         setTimeout(() => {
             this.attacking = false;
             this.isWalking = true;
         }, 1000 / 30);
     }
 
+    /**
+     * Makes the Endboss take damage and play a hurt animation.
+     * The Endboss will stop walking during this animation.
+     */
     takeDamage() {
         if (this.isHurtStatus) return;
     
@@ -175,13 +258,15 @@ class Endboss extends MovableObject {
             this.playAnimation(this.IMAGES_HURT);  
             this.playHurtSound();
         }
-        
         setTimeout(() => {
             this.isHurtStatus = false;
             this.isWalking = true;
         }, 500);
     }
 
+    /**
+     * Plays the hurt sound when the Endboss takes damage.
+     */
     playHurtSound() {
         if (this.playSounds && !this.hurtSoundCooldown || Date.now() - this.hurtSoundCooldown > 1000) {
             this.SOUND_HURT.currentTime = 1;
@@ -190,6 +275,10 @@ class Endboss extends MovableObject {
         }
     }
 
+    /**
+     * Marks the Endboss as dead and stops all actions.
+     * The Endboss stops walking and attacking.
+     */
     die() {
         this.isDeadStatus = true;
         this.attacking = false;

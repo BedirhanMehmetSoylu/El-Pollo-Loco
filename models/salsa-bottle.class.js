@@ -17,13 +17,21 @@ class SalsaBottle extends MovableObject {
         right: 15
     }
 
+    /**
+     * Creates a new instance of the SalsaBottle object.
+     * Loads the bottle image and starts the animation.
+     */
     constructor() {
         super().loadImage(this.IMAGES_BOTTLE[0]);
         this.loadImages(this.IMAGES_BOTTLE);
         this.animate();
-        this.x = 120 + Math.random() * 2100;
+        this.x = 260 + Math.random() * 2000;
     }
 
+    /**
+     * Starts the animation of the salsa bottle by alternating between its images.
+     * Runs at a set interval and stops if `pauseAnimation` is true.
+     */
     animate() {
         setInterval(() => {
             if (!this.pauseAnimation) {
@@ -32,6 +40,10 @@ class SalsaBottle extends MovableObject {
         }, 400);
     }
 
+    /**
+     * Plays the sound effect when the salsa bottle is collected.
+     * The sound plays only if the `playSounds` property is true.
+     */
     playCollectSound() {
         if (this.playSounds) {
             this.SOUND_COLLECT.volume = 0.4;

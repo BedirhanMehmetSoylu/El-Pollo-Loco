@@ -7,39 +7,29 @@ class DrawableObject {
     height = 200;
     width = 100;
 
+    /**
+     * Loads an image from the provided path and sets it as the current image of the object.
+     * 
+     * @param {string} path - The path to the image file to load.
+     */
     loadImage(path) {
-        this.img = new Image(); // this.img = document.getElementById('image') <img id="image" src=>
+        this.img = new Image()
         this.img.src = path;
     }
 
+    /**
+     * Draws the current image of the object onto the specified canvas context.
+     * 
+     * @param {CanvasRenderingContext2D} ctx - The canvas context to draw the image onto.
+     */
     draw(ctx) {
         ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
     }
 
-    drawFrame(ctx) {
-        if (this instanceof Character || this instanceof Endboss) {
-            ctx.beginPath();
-            ctx.lineWidth = '5';
-            ctx.strokeStyle = 'blue';
-            ctx.rect(this.x, this.y, this.width, this.height);
-            ctx.stroke();
-
-            // Zeichne das Offset-Frame
-            ctx.beginPath();
-            ctx.strokeStyle = 'red'; // Andere Farbe für den Offset
-            ctx.rect(
-                this.x + this.offset.left,
-                this.y + this.offset.top,
-                this.width - this.offset.left - this.offset.right,
-                this.height - this.offset.top - this.offset.bottom
-            );
-            ctx.stroke();
-        }
-    }
-
     /**
+     * Loads an array of images into the image cache, indexed by their respective paths.
      * 
-     * @param {*} array - ['img/image1.png', 'img/image2.png', 'img/image3.png', ...]
+     * @param {string[]} array - An array of image file paths to load.
      */
     loadImages(array) {
         array.forEach((path) => {

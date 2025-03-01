@@ -20,12 +20,20 @@ class StatusBarHealth extends DrawableObject {
         this.setPercentage(100);
     }
 
+    /**
+     * Updates the health bar to reflect the given percentage.
+     * @param {number} percentage - The player's health percentage (0-100).
+     */
     setPercentage(percentage) {
         this.percentage = percentage;
         let path = this.IMAGES[this.resolveImageIndexHealth()];
         this.img = this.imageCache[path];
     }
 
+    /**
+     * Determines the correct health bar image index based on the current percentage.
+     * @returns {number} The index of the corresponding image.
+     */
     resolveImageIndexHealth() {
         if (this.percentage == 100) {
             return 5;
@@ -35,7 +43,7 @@ class StatusBarHealth extends DrawableObject {
             return 3;
         } else if (this.percentage > 40) {
             return 2;
-        } else if (this.percentage > 20) {
+        } else if (this.percentage > 1) {
             return 1;
         } else {
             return 0;
@@ -65,12 +73,20 @@ class StatusBarBottle extends DrawableObject {
         this.setPercentageBottle(0);
     }
 
+    /**
+     * Updates the bottle status bar to reflect the current count.
+     * @param {number} percentageBottle - The number of bottles collected.
+     */
     setPercentageBottle(percentageBottle) {
         this.percentageBottle = percentageBottle;
         let path = this.IMAGES[this.resolveImageIndexBottle()];
         this.img = this.imageCache[path];
     }
 
+    /**
+     * Determines the correct bottle bar image index based on the current count.
+     * @returns {number} The index of the corresponding image.
+     */
     resolveImageIndexBottle() {
         if (this.percentageBottle <= 0) {
             return 0;
@@ -109,12 +125,20 @@ class StatusBarCoin extends DrawableObject {
         this.setPercentageCoin(0);
     }
 
+    /**
+     * Updates the coin status bar to reflect the current count.
+     * @param {number} percentageCoin - The number of coins collected.
+     */
     setPercentageCoin(percentageCoin) {
         this.percentageCoin = percentageCoin;
         let path = this.IMAGES[this.resolveImageIndexCoins()];
         this.img = this.imageCache[path];
     }
 
+    /**
+     * Determines the correct coin bar image index based on the current count.
+     * @returns {number} The index of the corresponding image.
+     */
     resolveImageIndexCoins() {
         if (this.percentageCoin <= 0) {
             return 0;
@@ -154,12 +178,20 @@ class StatusBarEndboss extends DrawableObject {
         this.setPercentage(100);
     }
 
+    /**
+     * Updates the Endboss health bar to reflect the given percentage.
+     * @param {number} percentageEndboss - The Endboss's health percentage (0-100).
+     */
     setPercentage(percentageEndboss) {
         this.percentageEndboss = percentageEndboss;
         let path = this.IMAGES[this.resolveImageIndexHealth()];
         this.img = this.imageCache[path];
     }
 
+    /**
+     * Determines the correct health bar image index based on the Endboss's current percentage.
+     * @returns {number} The index of the corresponding image.
+     */
     resolveImageIndexHealth() {
         if (this.percentageEndboss == 100) {
             return 5;
@@ -169,7 +201,7 @@ class StatusBarEndboss extends DrawableObject {
             return 3;
         } else if (this.percentageEndboss > 40) {
             return 2;
-        } else if (this.percentageEndboss > 20) {
+        } else if (this.percentageEndboss > 1) {
             return 1;
         } else {
             return 0;

@@ -19,6 +19,12 @@ class ThrowableObject extends MovableObject {
 
     isThrowing = true;
 
+    /**
+     * Creates an instance of ThrowableObject.
+     * @param {number} x - The initial x-coordinate of the bottle.
+     * @param {number} y - The initial y-coordinate of the bottle.
+     * @param {boolean} otherDirection - Whether the bottle is thrown to the left.
+     */
     constructor(x, y, otherDirection) {
         super().loadImage('./img/6_salsa_bottle/salsa_bottle.png');
         this.loadImages(this.IMAGES_ROTATION);
@@ -33,6 +39,11 @@ class ThrowableObject extends MovableObject {
         this.animate();
     }
 
+    /**
+     * Handles the animation of the bottle.
+     * If the bottle is above a certain height, it plays the rotation animation.
+     * Otherwise, it switches to the splash animation.
+     */
     animate() {
         setInterval(() => {
             if (this.y <= 150) {
@@ -45,23 +56,47 @@ class ThrowableObject extends MovableObject {
         }, 100);
     }
 
+    /**
+     * Initiates the throw by setting the vertical speed and applying gravity.
+     * Also determines the direction of the throw.
+     */
     throw() {
-        if (this.isThrowing) {
-            this.speedY = 25;
-            this.applyGravity();
-            if (this.otherDirection) {
-                this.x -= 100;
-                setInterval(() => {
-                    this.x -= 12;
-                }, 25);
-            } else {
-                setInterval(() => {
-                    this.x += 12;
-                }, 25);
-            }    
+        if (!this.isThrowing) return;
+
+        this.speedY = 25;
+        this.applyGravity();
+        this.setThrowDirection();
+    }
+
+    /**
+     * Determines the throw direction and moves the bottle accordingly.
+     */
+    setThrowDirection() {
+        const moveDistance = 12;
+        const intervalTime = 25;
+
+        if (this.otherDirection) {
+            this.x -= 100;
+            this.startMovement(-moveDistance, intervalTime);
+        } else {
+            this.startMovement(moveDistance, intervalTime);
         }
     }
 
+    /**
+     * Moves the bottle in the specified horizontal direction at a fixed interval.
+     * @param {number} distance - The horizontal distance to move per interval.
+     * @param {number} interval - The interval time in milliseconds.
+     */
+    startMovement(distance, interval) {
+        setInterval(() => {
+            this.x += distance;
+        }, interval);
+    }
+
+    /**
+     * Plays the bottle splash sound effect when the bottle lands.
+     */
     playSplashSound() {
         if (this.playSounds) {
             this.SOUND_SPLASH.currentTime = 0.5;

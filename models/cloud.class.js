@@ -14,6 +14,11 @@ class Cloud extends MovableObject {
         './img/5_background/layers/4_clouds/2.png'
     ];
 
+    /**
+     * Creates an instance of a cloud and initializes its position and animation.
+     * 
+     * @constructor
+     */
     constructor() {
         super();
         this.x = Math.random() * 500;
@@ -21,12 +26,23 @@ class Cloud extends MovableObject {
         this.animate();
     }
 
+    /**
+     * Loads an image from the given source path and returns the image element.
+     * 
+     * @param {string} src - The path to the image source.
+     * @returns {HTMLImageElement} The image element.
+     */
     loadNewImage(src) {
         let img = new Image();
         img.src = src;
         return img;
     }
 
+    /**
+     * Animates the cloud by moving it to the left at a set interval.
+     * 
+     * @private
+     */
     animate() {
         setInterval(() => {
             if (!this.pauseAnimation) {
@@ -35,6 +51,12 @@ class Cloud extends MovableObject {
         }, 1000 / 60);
     }
 
+    /**
+     * Draws the cloud on the canvas by rendering each image in the cloud's image array.
+     * The images will be drawn in a sequence, creating a moving effect.
+     * 
+     * @param {CanvasRenderingContext2D} ctx - The canvas context to draw on.
+     */
     draw(ctx) {
         this.images.forEach((img, index) => {
             ctx.drawImage(img, this.x + index * this.width, this.y, this.width, this.height);
