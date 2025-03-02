@@ -218,7 +218,7 @@ class World {
     checkCollisionBottles() {
         setInterval(() => {
             this.level.bottles.forEach((bottle) => {
-                 if (this.character.isColliding(bottle)) {
+                 if (this.character.isColliding(bottle) && this.character.bottles < 5) {
                      bottle.playCollectSound();
                      this.character.collectBottle();
                      this.level.bottles.splice(this.level.bottles.indexOf(bottle), 1);

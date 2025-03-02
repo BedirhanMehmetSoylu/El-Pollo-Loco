@@ -72,3 +72,9 @@ a:hover {
         font-size: 46px;
     }
 }
+
+@media (max-width: 950px) and (orientation: landscape) {
+    .content {
+        height: unset;
+    }
+}
