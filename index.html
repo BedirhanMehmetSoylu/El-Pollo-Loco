@@ -51,35 +51,37 @@
             <img class="fullscreen" src="./img/11_buttons/fullscreen.png" alt="" onclick="toggleFullscreen()">
         </div>
         <div id="gameoverOverlay" class="gameover-overlay" style="display: none;">
-            <img src="./img/9_intro_outro_screens/game_over/oh no you lost!.png" alt="">
+            <img src="./img/9_intro_outro_screens/game_over/game over!.png" alt="">
         </div>
         <div id="gameoverOptions" class="gameover-options" style="display: none;">
             <span onclick="backToMenu()">BACK TO MENU</span>
             <span onclick="restartGame()">RESTART</span>
         </div>
-        <div id="gamewonOptions" class="gamewon-overlay" style="display: none;">
+        <div id="gamewonOverlay" class="gamewon-overlay" style="display: none;">
             <img src="./img/9_intro_outro_screens/game_over/won.png" alt="">
-            <span class="gamewon-options" onclick="backToMenu()">BACK TO MENU</span>
-            <span class="gamewon-options" onclick="restartGame()">RESTART</span>
         </div>
-        <div class="mobile-controls-container">
+        <div id="gamewonOptions" class="gameover-options" style="display: none;">
+            <span onclick="backToMenu()">BACK TO MENU</span>
+            <span onclick="restartGame()">RESTART</span>
+        </div>
+        <div id="mobileButtons" class="mobile-controls-container">
             <div class="mobile-controls-split">
-                <div ontouchstart="keyboard.LEFT = true" ontouchend="keyboard.LEFT = false" class="mobile-controls">
+                <div class="mobile-controls" ontouchstart="startTouch(event, 'LEFT')" ontouchend="endTouch(event, 'LEFT')">
                     <img src="./img/11_buttons/moveLeft.png" alt="">
                 </div>
-                <div ontouchstart="keyboard.RIGHT = true" ontouchend="keyboard.RIGHT = false" class="mobile-controls">
+                <div class="mobile-controls" ontouchstart="startTouch(event, 'RIGHT')" ontouchend="endTouch(event, 'RIGHT')">
                     <img src="./img/11_buttons/moveRight.png" alt="">
                 </div>
             </div>
             <div class="mobile-controls-split">
-                <div ontouchstart="keyboard.SPACE = true" ontouchend="keyboard.SPACE = false" class="mobile-controls">
+                <div class="mobile-controls" ontouchstart="startTouch(event, 'SPACE')" ontouchend="endTouch(event, 'SPACE')">
                     <img class="jump-button" src="./img/2_character_pepe/3_jump/J-35.png" alt="">
                 </div>
-                <div ontouchstart="keyboard.E = true" ontouchend="keyboard.E = false" class="mobile-controls">
+                <div class="mobile-controls" ontouchstart="startTouch(event, 'E')" ontouchend="endTouch(event, 'E')">
                     <img class="throw-button" src="./img/6_salsa_bottle/salsa_bottle.png" alt="">
                 </div>
             </div>
-        </div>
+        </div>        
         <div id="keyboardControls" class="info-container" style="display: none;">
             <span class="controls-headline">Controls</span>
             <div class="controls-container">

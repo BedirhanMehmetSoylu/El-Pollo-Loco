@@ -241,8 +241,11 @@ function restartGame() {
     world.level = newLevel;
     world.setWorld();
     world.run();
+    document.getElementById('gamewonOverlay').style.display = 'none';
+    document.getElementById('gamewonOptions').style.display = 'none';
     document.getElementById('gameoverOverlay').style.display = 'none';
     document.getElementById('gameoverOptions').style.display = 'none';
+    document.getElementById('mobileButtons').removeAttribute('style');
     resumeGame();
     setPlaySoundForAllMovableObjects();
 }
@@ -275,4 +278,28 @@ function exitFullscreen() {
     if (document.fullscreenElement) {
         document.exitFullscreen();
     }
+}
+
+/**
+ * Handles the start of a touch event and sets the corresponding keyboard key to `true`.
+ * Prevents default behavior to eliminate delay and avoid triggering the context menu.
+ *
+ * @param {TouchEvent} event - The touch event object.
+ * @param {string} key - The key in the `keyboard` object to be set to `true`.
+ */
+function startTouch(event, key) {
+    event.preventDefault(); // Verhindert Verzögerung und Kontextmenü
+    keyboard[key] = true;
+}
+
+/**
+ * Handles the end of a touch event and sets the corresponding keyboard key to `false`.
+ * Prevents default behavior to ensure smooth interaction.
+ *
+ * @param {TouchEvent} event - The touch event object.
+ * @param {string} key - The key in the `keyboard` object to be set to `false`.
+ */
+function endTouch(event, key) {
+    event.preventDefault();
+    keyboard[key] = false;
 }

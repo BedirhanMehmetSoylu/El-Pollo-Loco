@@ -195,11 +195,11 @@ class StatusBarEndboss extends DrawableObject {
     resolveImageIndexHealth() {
         if (this.percentageEndboss == 100) {
             return 5;
-        } else if (this.percentageEndboss > 80) {
+        } else if (this.percentageEndboss >= 80) {
             return 4;
-        } else if (this.percentageEndboss > 60) {
+        } else if (this.percentageEndboss >= 60) {
             return 3;
-        } else if (this.percentageEndboss > 40) {
+        } else if (this.percentageEndboss >= 40) {
             return 2;
         } else if (this.percentageEndboss > 1) {
             return 1;

@@ -65,7 +65,9 @@ function manageWorld() {
  */
 function gameWon () {
     exitFullscreen();
-    document.getElementById('gamewonOptions').style.display ='flex';
+    document.getElementById('gamewonOverlay').style.display = 'flex';
+    document.getElementById('gamewonOptions').style.display = 'flex';
+    document.getElementById('mobileButtons').style.display = 'none';
     pauseGame();
 
     if (isSoundOn) {
@@ -81,7 +83,7 @@ function gameOver() {
     exitFullscreen();
     document.getElementById('gameoverOverlay').style.display = 'block';
     document.getElementById('gameoverOptions').style.display = 'flex';
-    
+    document.getElementById('mobileButtons').style.display = 'none';
     if (isSoundOn) {
         gameOverSound.play();
     }
@@ -94,6 +96,7 @@ function backToMenu() {
     document.getElementById('intro').style.display = 'block';
     document.getElementById('gameScreen').style.display = 'none'
     document.getElementById('gamewonOptions').style.display ='none';
+    document.getElementById('mobileButtons').removeAttribute('style');
     canvas = document.getElementById('canvas');
     canvas.style.display = 'none'
     world.endboss.isGameWon = false;
