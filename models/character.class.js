@@ -267,8 +267,6 @@ class Character extends MovableObject {
         let now = Date.now();
         let cooldown = 350;
 
-        console.log("playJumpSound aufgerufen!");
-
         if (now - this.lastJumpSoundTime >= cooldown && this.playSounds) {
             this.SOUND_JUMP.volume = 0.5;
             this.SOUND_JUMP.currentTime = 0;

@@ -68,6 +68,10 @@ function setPlaySoundForAllMovableObjects() {
     });
 }
 
+/**
+ * Handles the sound settings based on the `isSoundOn` state.
+ * If the sound is on, it plays the background music; otherwise, it updates the mute button image.
+ */
 function handleSound() {
     if (isSoundOn) {
         playBackgroundMusic();
@@ -76,10 +80,17 @@ function handleSound() {
     }
 }
 
+/**
+ * Updates the mute button image to indicate that the sound is muted.
+ */
 function imageMuteSound() {
     document.querySelector('.mute').src = "./img/11_buttons/mute.png";
 }
 
+/**
+ * Pauses all active game sounds if the sound is enabled.
+ * This includes background music and chicken sound effects.
+ */
 function pauseSounds() {
     if (isSoundOn) {
         backgroundMusic.pause();
@@ -87,6 +98,10 @@ function pauseSounds() {
     }
 }
 
+/**
+ * Resumes all previously active game sounds if the sound is enabled.
+ * This includes background music and chicken sound effects.
+ */
 function resumeSounds() {
     if (isSoundOn) {
         backgroundMusic.play();

@@ -63,7 +63,7 @@ class World {
      */
     checkThrowObjects() {
         const currentTime = new Date().getTime();
-        const throwDelay = 500;
+        const throwDelay = 1000;
     
         if (this.keyboard.E && this.character.bottles > 0 && currentTime - this.lastThrowTime >= throwDelay) {
             let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100, this.character.otherDirection);
